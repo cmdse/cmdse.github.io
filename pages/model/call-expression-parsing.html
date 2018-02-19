@@ -1,0 +1,852 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3. Call expressions parsing &mdash; cmdse 0.0.1-draft.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="cmdse 0.0.1-draft.4 documentation" href="../../index.html"/>
+        <link rel="next" title="4. Search query model" href="query.html"/>
+        <link rel="prev" title="2. Command snippet model" href="command-snippet.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> cmdse
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1-draft.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">1. Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-snippet.html">2. Command snippet model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Call expressions parsing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parsing-workflow">3.1. Parsing workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tokenization">3.2. Tokenization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#context-free-tokens-typings">3.2.1. Context-free tokens typings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#semantic-tokens-typings">3.2.2. Semantic tokens typings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#analytic-model">3.3. Analytic Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#option-parsing-algorithm">3.4. Option parsing algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#edge-cases-and-extension-perspectives">3.5. Edge cases and extension perspectives</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="query.html">4. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">5. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../character-encoding.html">6. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design-faq.html">7. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manparse.html">8. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash-grammar.html">9. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/grammar-commons.html">10. Shared definitions for ABNF grammars</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">cmdse</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+    <li>3. Call expressions parsing</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/pages/model/call-expression-parsing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="call-expressions-parsing">
+<span id="call-expression-parsing"></span><h1>3. Call expressions parsing<a class="headerlink" href="#call-expressions-parsing" title="Permalink to this headline">¶</a></h1>
+<p>To add semantics, the <a class="reference internal" href="command-snippet.html#term-call-expression"><span class="xref std std-term">call expression</span></a> parser will try to guess the nature of arguments by converting them into tokens.
+After givent some context, such tokens will be assembled to metadata, which is comprised of:</p>
+<ul class="simple">
+<li>option assignment expressions and a description of left-side and value parts</li>
+<li>standalone option expressions and a description of the underlying option</li>
+<li>command operands and a their description</li>
+</ul>
+<div class="section" id="parsing-workflow">
+<h2>3.1. Parsing workflow<a class="headerlink" href="#parsing-workflow" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#call-expression-process-flow"><span class="std std-numref">Fig. 3.1</span></a> shows an overview of the different steps involved in call expression parsing.
+Those steps are grouped into higher-level steps (<em>A</em>, <em>B</em>, <em>C</em>). The core of call expression parsing is done in <em>B</em> through tokenization (see <a class="reference internal" href="#token-typings"><span class="std std-numref">Section 3.2</span></a> for a better understanding on token typing). But some static bash analysis must be done upstream (<em>A</em>, see <a class="reference internal" href="command-snippet.html#call-expression-structure"><span class="std std-numref">Section 2.4</span></a> for more details about this step).
+After parsing, the call expression must be assembled to form a metadata structure (<em>C</em>).</p>
+<div class="figure align-center" id="id3">
+<span id="call-expression-process-flow"></span><p class="plantuml">
+<a href="../../_images/plantuml-fbe02a79396992cf5061bf0ed2c867f5c964f421.png"><img src="../../_images/plantuml-fbe02a79396992cf5061bf0ed2c867f5c964f421.png" alt="&#64;startuml
+!include styles.puml
+
+start
+(A)
+partition &quot;Static shell parsing (A)&quot; {
+  :(A.1) Static call expression identified by shell static
+  analyser;
+  :(A.2) Call expression expanded;
+  :(A.3) Call expression word-splitted;
+}
+(B)
+partition &quot;Tokenization (B)&quot; {
+  :(B.1) Arguments of call expression
+  converted to a list of
+  tokens with context-free types;
+  :(B.2) Check for the existence of a
+  Program Interface Model (PIM)
+  associated with the command identifier;
+  repeat
+  repeat
+  :(B.3) For each token which type is non-semantic,
+  transform its type to semantic when inference is possible.
+  Use PIM if available;
+  repeat while (at least one transformation\n occured in the last two parses?) is (yes)
+  if (token list contains\nnon-semantic tokens) then (yes)
+    :(B.4) Prompt the user to map
+    the leftmost non-semantic token
+    to a single semantic token ;
+  else (no)
+    (C)
+    detach
+
+  endif
+  repeat while (token list contains\nnon-semantic tokens) is (yes)
+}
+(C)
+partition &quot;Assembly (C)&quot; {
+  :(C.1) Reassemble tokens into structured option expressions
+  assignments, standalone option expressions and command
+  operands. Reassembling is done with splitting explicit
+  assignments and grouping implicit assignments;
+  :(C.2) Build call expression metadata from
+  assembled expressions;
+  stop
+}
+&#64;enduml
+" style="width: 500px"/></a>
+</p>
+<p class="caption"><span class="caption-number">Fig. 3.1 </span><span class="caption-text">Call expression parsing dataflow</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="tokenization">
+<span id="token-typings"></span><h2>3.2. Tokenization<a class="headerlink" href="#tokenization" title="Permalink to this headline">¶</a></h2>
+<p>The first step consists in creating a list of tokens that maps the command arguments (<a class="reference internal" href="#call-expression-process-flow"><span class="std std-numref">Fig. 3.1</span></a>, <em>item B.1</em>). The token types will be updated thanks to basic inference rules and command meta-information. These token types are first assigned to “context-free” tokens (see <a class="reference internal" href="#context-free-tokens"><span class="std std-numref">Table 3.1</span></a> for a listing). “Context-free” means that their nature can be captured without the need for information about their siblings or position, and is therefore trivial.</p>
+<p>In a second step (<a class="reference internal" href="#call-expression-process-flow"><span class="std std-numref">Fig. 3.1</span></a>, <em>item B.3</em>), token types are assigned to “semantic token type” values (<a class="reference internal" href="#semantic-token-properties"><span class="std std-numref">Table 3.3</span></a>) given some inference rules and information extracted from the <a class="reference internal" href="command-snippet.html#term-program-interface-model"><span class="xref std std-term">program interface model</span></a> (PIM, <a class="reference internal" href="#call-expression-process-flow"><span class="std std-numref">Fig. 3.1</span></a>, <em>item B.2</em>). The underlying algorithm is described in details in <a class="reference internal" href="#option-parsing-algorithm"><span class="std std-numref">Section 3.4</span></a>.</p>
+<p>When semantic type cannot be inferred, a prompt to the user is processed (<a class="reference internal" href="#call-expression-process-flow"><span class="std std-numref">Fig. 3.1</span></a>, <em>item B.4</em>).</p>
+<div class="section" id="context-free-tokens-typings">
+<h3>3.2.1. Context-free tokens typings<a class="headerlink" href="#context-free-tokens-typings" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#context-free-tokens"><span class="std std-numref">Table 3.1</span></a> shows a list of the context-free token types.
+In the last column, a list of semantic type candidates is provided. This list shows which semantic types this context-free type can be transformed to.
+Some of these context-free token types overlap semantic token types, because they have only one semantic candidate (resolved to <em>self</em>). They are considered “non-ambiguous” and don’t need further transformation.</p>
+<span id="context-free-tokens"></span><table border="1" class="colwidths-given docutils" id="id4">
+<caption><span class="caption-number">Table 3.1 </span><span class="caption-text">Context-free token types</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="40%" />
+<col width="10%" />
+<col width="10%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Context-free token type</th>
+<th class="head">Is option flag?</th>
+<th class="head"><div class="first last line-block">
+<div class="line">Examples</div>
+<div class="line"><em>given in</em></div>
+<div class="line"><em>brackets</em> “[]”</div>
+</div>
+</th>
+<th class="head">Semantic type candidates</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">POSIX_SHORT_STICKY_VALUE</span></code></td>
+<td>yes</td>
+<td><code class="docutils literal"><span class="pre">[-o&lt;int-value&gt;]</span></code></td>
+<td><em>self</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">GNU_EXPLICIT_ASSIGNMENT</span></code></td>
+<td>yes</td>
+<td><code class="docutils literal"><span class="pre">[--option=&lt;value&gt;]</span></code></td>
+<td><em>self</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">X2LKT_EXPLICIT_ASSIGNMENT</span></code></td>
+<td>yes</td>
+<td><code class="docutils literal"><span class="pre">[-option=&lt;value&gt;]</span></code></td>
+<td><em>self</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">X2LKT_REVERSE_SWITCH</span></code></td>
+<td>yes</td>
+<td><code class="docutils literal"><span class="pre">[+option]</span></code></td>
+<td><em>self</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">END_OF_OPTIONS</span></code></td>
+<td>yes</td>
+<td><code class="docutils literal"><span class="pre">[--]</span></code></td>
+<td><em>self</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ONE_DASH_LETTER</span></code></td>
+<td>yes</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">[-o]</span> <span class="pre">&lt;value&gt;</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">[-o]</span></code></div>
+</div>
+</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT_LEFT_SIDE</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ONE_DASH_WORD_ALPHANUM</span></code></td>
+<td>yes</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">[-opq]`</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">[-option]`</span></code></div>
+</div>
+</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">POSIX_STACKED_SHORT_SWITCHES</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNEMNT_LEFT_SIDE</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ONE_DASH_WORD</span></code></td>
+<td>yes</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">[-long-option]</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">[-long-option]</span> <span class="pre">&lt;value&gt;</span></code></div>
+</div>
+</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">X2LKT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNEMNT_LEFT_SIDE</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">TWO_DASH_WORD</span></code></td>
+<td>yes</td>
+<td><code class="docutils literal"><span class="pre">[--option]</span></code></td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">GNU_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_IMPLICIT_ASSIGNMENT_LEFT_SIDE</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">OPT_WORD</span></code></td>
+<td>no<a class="footnote-reference" href="#headless-option-exception" id="id1">[1]</a></td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">-o</span> <span class="pre">[&lt;value&gt;]</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">--option</span> <span class="pre">[&lt;value&gt;]</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">-option</span> <span class="pre">[&lt;value&gt;]</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">option</span></code></div>
+</div>
+</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">OPERAND</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT_VALUE</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_IMPLICIT_ASSIGNMENT_VALUE</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNMENT_VALUE</span></code></li>
+<li><code class="docutils literal"><span class="pre">HEADLESS_OPTION</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">WORD</span></code></td>
+<td>no</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">ls</span> <span class="pre">[~/]</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">-o</span> <span class="pre">/some/file</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">--option</span> <span class="pre">/some/files</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">-option</span> <span class="pre">/some/file</span></code></div>
+</div>
+</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">OPERAND</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT_VALUE</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_IMPLICIT_ASSIGNMENT_VALUE</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNMENT_VALUE</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="semantic-tokens-typings">
+<h3>3.2.2. Semantic tokens typings<a class="headerlink" href="#semantic-tokens-typings" title="Permalink to this headline">¶</a></h3>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">See the <a class="reference internal" href="command-snippet.html#option-expression-syntax"><span class="std std-numref">Section 2.5</span></a> for details on the existing option expression styles from which a majority of those semantic token types are derived.</p>
+</div>
+<p>The <a class="reference internal" href="#semantic-token-properties"><span class="std std-numref">Table 3.3</span></a> shows a list of the semantic token types. Those types have a positional model (<a class="reference internal" href="#token-positional-model"><span class="std std-numref">Table 3.2</span></a>) from which rules can be inferred.
+For example of such inferences, in the <a class="reference internal" href="command-snippet.html#term-call-expression"><span class="xref std std-term">call expression</span></a> <code class="docutils literal"><span class="pre">find</span> <span class="pre">.</span> <span class="pre">-type</span> <span class="pre">file</span></code>, “file” would be a token which positional model is <code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_VALUE</span></code> and type <code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNMENT_VALUE</span></code> and “-type” a <code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_LEFT_SIDE</span></code> of type <code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNEMNT_LEFT_SIDE</span></code>.</p>
+<span id="token-positional-model"></span><table border="1" class="colwidths-given docutils" id="id5">
+<caption><span class="caption-number">Table 3.2 </span><span class="caption-text">Token positional model</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Positionnal model name</th>
+<th class="head">Description</th>
+<th class="head">Binding</th>
+<th class="head"><div class="first last line-block">
+<div class="line">is</div>
+<div class="line">“option part”</div>
+</div>
+</th>
+<th class="head"><div class="first last line-block">
+<div class="line">is</div>
+<div class="line">“option flag”</div>
+</div>
+</th>
+<th class="head"><div class="first last line-block">
+<div class="line">is</div>
+<div class="line">“semantic”</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_LEFT_SIDE</span></code></td>
+<td>The left side of an implicit option assignment in the form <code class="docutils literal"><span class="pre">left-side</span> <span class="pre">&lt;value&gt;</span></code>.</td>
+<td><em>right</em></td>
+<td><em>yes</em></td>
+<td><em>yes</em></td>
+<td><em>yes</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_VALUE</span></code></td>
+<td>The right side of an implicit option assignment in the form <code class="docutils literal"><span class="pre">left-side</span> <span class="pre">&lt;value&gt;</span></code>.</td>
+<td><em>left</em></td>
+<td><em>yes</em></td>
+<td><em>no</em></td>
+<td><em>yes</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">STANDALONE_OPT_ASSIGNMENT</span></code></td>
+<td>A token option with value assignment.</td>
+<td><em>none</em></td>
+<td><em>yes</em></td>
+<td><em>yes</em></td>
+<td><em>yes</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">OPT_SWITCH</span></code></td>
+<td>An option switch, that is without value.</td>
+<td><em>none</em></td>
+<td><em>yes</em></td>
+<td><em>yes</em></td>
+<td><em>yes</em></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">COMMAND_OPERAND</span></code></td>
+<td>A command operand.</td>
+<td><em>none</em></td>
+<td><em>no</em></td>
+<td><em>no</em></td>
+<td><em>yes</em></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">UNSET</span></code></td>
+<td>Positional model unset.</td>
+<td><em>inferred</em></td>
+<td><em>inferred</em></td>
+<td><em>inferred</em></td>
+<td><em>false</em></td>
+</tr>
+</tbody>
+</table>
+<p>In the <a class="reference internal" href="#token-positional-model"><span class="std std-numref">Table 3.2</span></a>, the first 5 models are applicable for semantic token types, while the latest is applicable for context-free types. The attributes of the latest are dynamically inferred regarding the set of semantic candidates associated with a token instance. For example, if a context-free type has semantic candidates which positionnal model all have is “option part” set to true, it will infer the attribute to true.</p>
+<span id="semantic-token-properties"></span><table border="1" class="colwidths-given docutils" id="id6">
+<caption><span class="caption-number">Table 3.3 </span><span class="caption-text">Semantic token types</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Semantic token type</th>
+<th class="head"><div class="first last line-block">
+<div class="line">Example, <em>given in brackets</em>, “[]”</div>
+</div>
+</th>
+<th class="head"><div class="first last line-block">
+<div class="line">Positional model</div>
+</div>
+</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">X2LKT_REVERSE_SWITCH</span></code></td>
+<td><code class="docutils literal"><span class="pre">[+option]</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_SWITCH</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></td>
+<td><code class="docutils literal"><span class="pre">[-o]</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_SWITCH</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">POSIX_STACKED_SHORT_SWITCHES</span></code></td>
+<td><code class="docutils literal"><span class="pre">[-opq]</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_SWITCH</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT_LEFT_SIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">[-o]</span> <span class="pre">&lt;value&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_LEFT_SIDE</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">-o</span> <span class="pre">[&lt;value&gt;]</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_VALUE</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">POSIX_SHORT_STICKY_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">[-o&lt;value&gt;]</span></code></td>
+<td><code class="docutils literal"><span class="pre">STANDALONE_OPT_ASSIGNMENT</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">X2LKT_SWITCH</span></code></td>
+<td><code class="docutils literal"><span class="pre">[-option]</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_SWITCH</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNEMNT_LEFT_SIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">[-option]</span> <span class="pre">&lt;value&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_LEFT_SIDE</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNMENT_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">-option</span> <span class="pre">[&lt;value&gt;]</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_VALUE</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">X2LKT_EXPLICIT_ASSIGNMENT</span></code></td>
+<td><code class="docutils literal"><span class="pre">[-option=&lt;value&gt;]</span></code></td>
+<td><code class="docutils literal"><span class="pre">STANDALONE_OPT_ASSIGNMENT</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">GNU_SWITCH</span></code></td>
+<td><code class="docutils literal"><span class="pre">--option</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_SWITCH</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">GNU_IMPLICIT_ASSIGNMENT_LEFT_SIDE</span></code></td>
+<td><code class="docutils literal"><span class="pre">[--option]</span> <span class="pre">&lt;value&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_LEFT_SIDE</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">GNU_IMPLICIT_ASSIGNMENT_VALUE</span></code></td>
+<td><code class="docutils literal"><span class="pre">--option</span> <span class="pre">[&lt;value&gt;]</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_IMPLICIT_ASSIGNMENT_VALUE</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">GNU_EXPLICIT_ASSIGNMENT</span></code></td>
+<td><code class="docutils literal"><span class="pre">[--option=&lt;value&gt;]</span></code></td>
+<td><code class="docutils literal"><span class="pre">STANDALONE_OPT_ASSIGNMENT</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">END_OF_OPTIONS</span></code></td>
+<td><code class="docutils literal"><span class="pre">[--]</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_SWITCH</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">OPERAND</span></code></td>
+<td><code class="docutils literal"><span class="pre">[&lt;operand&gt;]</span></code></td>
+<td><code class="docutils literal"><span class="pre">COMMAND_OPERAND</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">HEADLESS_OPTION</span></code></td>
+<td><code class="docutils literal"><span class="pre">[option]</span></code></td>
+<td><code class="docutils literal"><span class="pre">OPT_SWITCH</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="analytic-model">
+<h2>3.3. Analytic Model<a class="headerlink" href="#analytic-model" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-center" id="snippet-class-diagram">
+<p class="plantuml">
+<a href="../../_images/plantuml-537aa95823f114dbd032dd9ea0260aa24de18b0e.png"><img src="../../_images/plantuml-537aa95823f114dbd032dd9ea0260aa24de18b0e.png" alt="&#64;startuml
+!include styles.puml
+
+class Program {
+  + String projectURL
+  + String commandIdentifier
+}
+
+class ProgramInterfaceModel {
+  Program program
+  OptionScheme optionScheme
+  OptionDescription[] optionDescriptions
+}
+
+enum TokenPositionalModel {
+  + Binding binding = 'UNKNOWN' | 'NONE' | 'LEFT' | 'RIGHT'
+  + Bool isSemantic
+  - Bool isOptionFlag
+  - Bool isOptionPart
+  ..models..
+  OPT_IMPLICIT_ASSIGNMENT_LEFT_SIDE
+  OPT_IMPLICIT_ASSIGNMENT_VALUE
+  STANDALONE_OPT_ASSIGNMENT
+  OPT_SWITCH
+  COMMAND_OPERAND
+  UNSET
+}
+
+enum OptionExpressionVariant {
+ Regex flagRegex
+ TokenType flagType
+ Optional&lt;TokenType&gt; valueType
+ OptionStyle style = 'POSIX' | 'XTOOLKIT' | 'GNU' | 'NONE'
+ .. variants ..
+ POSIX_SHORT_SWITCH
+ POSIX_STACKED_SHORT_SWITCHES
+ POSIX_SHORT_ASSIGNMENT
+ POSIX_SHORT_STICKY_VALUE
+ X2LKT_SWITCH
+ X2LKT_REVERSE_SWITCH
+ X2LKT_IMPLICIT_ASSIGNMENT
+ X2LKT_EXPLICIT_ASSIGNMENT
+ GNU_SWITCH
+ GNU_IMPLICIT_ASSIGNMENT
+ GNU_EXPLICIT_ASSIGNMENT
+ END_OF_OPTIONS
+ HEADLESS_OPTION
+}
+
+class OptionScheme {
+  OptionExpressionVariant[] variants
+}
+
+class OptionDescription {
+  + OptionExpressionVariants[] supportedVariants
+  + ValueModel valueModel = 'NONE' | 'OPTIONAL' | 'MANDATORY'
+  + String description
+  + Optional&lt;TokenType&gt; matchDescription(Token token)
+}
+
+class CallExpression {
+ + String commandIdentifier
+ + String[] arguments
+ + String raw
+ + LineRange lines
+}
+
+class Token {
+  + Int argumentPosition
+  + TokenType type
+  + String value
+  + Token boundTo
+  + OptionDescription optionDescription
+  + TokenType[] semanticCandidates
+  + PositionalModel[] posModelCandidates()
+  + Bool isOptionFlag()
+  + Bool isOptionPart()
+  + Bool isBoundToOneOf(Binding[] bindings)
+  + Bool isBoundTo(Binding binding)
+  + Bool matchOptionDescription(OptionDescription[] options)
+  + Bool reduceCandidatesWithScheme(OptionScheme scheme)
+}
+
+class CallExpressionMetadata {
+  CallExpression callExpression
+  OptionExpression[] optionExpressions
+  Operand[] operands
+  Token[] tokens
+}
+
+enum TokenType {
+  + PositionalModel posModel
+  + Bool isSemantic()
+}
+
+
+enum ContextFreeTokenType {
+  + SemanticTokenType[] semanticCandidates
+  -----
+  .. ContextFree and Semantic ..
+  X2LKT_REVERSE_SWITCH
+  GNU_EXPLICIT_ASSIGNMENT
+  X2LKT_EXPLICIT_ASSIGNMENT
+  END_OF_OPTIONS
+  .. Strictly ContextFree ..
+  ONE_DASH_WORD
+  ONE_DASH_LETTER
+  TWO_DASH_WORD
+  WORD
+}
+
+note &quot;isOption* is resolved to type.posModel.isOption* \nwhen type.posModel is not UNSET or to true when \n '∀c ∈ {posModelCandidates}, c.isOption* = true', false otherwise.\nSeemingly, isBoundToOneOf is resolved to \n'token.type.posModelbinding.binding ∈ {bindings}'\nwhen posModel is not UNSET, otherwise to\n'{bindings} ∩ {token.posModelCandidates} = {bindings}'.&quot; as N2
+Token  .. N2
+N2 .. TokenPositionalModel
+
+
+enum SemanticTokenType {
+  + OptionExpressionVariant variant
+  -----
+  .. ContextFree and Semantic ..
+  X2LKT_REVERSE_SWITCH
+  GNU_EXPLICIT_ASSIGNMENT
+  X2LKT_EXPLICIT_ASSIGNMENT
+  END_OF_OPTIONS
+  .. Strictly Semantic ..
+  POSIX_SHORT_SWITCH
+  POSIX_STACKED_SHORT_SWITCHES
+  POSIX_SHORT_ASSIGNMENT_LEFT_SIDE
+  POSIX_SHORT_ASSIGNMENT_VALUE
+  POSIX_SHORT_STICKY_VALUE
+  GNU_IMPLICIT_ASSIGNMENT_LEFT_SIDE
+  GNU_IMPLICIT_ASSIGNMENT_VALUE
+  X2LKT_SWITCH
+  X2LKT_IMPLICIT_ASSIGNEMNT_LEFT_SIDE
+  X2LKT_IMPLICIT_ASSIGNMENT_VALUE
+  OPERAND
+  HEADLESS_OPTION
+}
+
+class Parser {
+  CallExpressionMetadata parse(CallExpression callExpression)
+}
+
+
+TokenType &lt;|-- ContextFreeTokenType
+TokenType &lt;|-- SemanticTokenType
+OptionDescription o-- ProgramInterfaceModel
+OptionExpressionVariant o-- OptionScheme
+OptionExpressionVariant o-- OptionDescription
+OptionExpressionVariant o--o TokenType
+OptionScheme o-- ProgramInterfaceModel
+TokenType   &quot;1&quot; *-- &quot;*&quot; Token
+TokenPositionalModel *-- TokenType
+OptionDescription &quot;?&quot; o-- &quot;*&quot; Token
+CallExpression o-- Parser
+Token o-- CallExpressionMetadata
+CallExpressionMetadata o-- Parser
+ProgramInterfaceModel o-- Parser
+Program o-- ProgramInterfaceModel
+
+&#64;enduml
+" style="width: 100%"/></a>
+</p>
+</div>
+</div>
+<div class="section" id="option-parsing-algorithm">
+<span id="id2"></span><h2>3.4. Option parsing algorithm<a class="headerlink" href="#option-parsing-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>This section offers an in-depth look at tokenization (B) step from <a class="reference internal" href="#call-expression-process-flow"><span class="std std-numref">Fig. 3.1</span></a>.
+The parser will hold in memory a list of tokens (<a class="reference internal" href="#snippet-class-diagram"><span class="std std-numref">Fig. 3.2</span></a>). Each of these starts with a context-free type. The parser’s job is considered done when all tokens hold a semantic type.
+To get there, it will proceed with the following steps :</p>
+<ol class="arabic">
+<li><p class="first">Initiate the token list with the result of mapping arguments to context-free token generation.</p>
+</li>
+<li><p class="first">Fetch the <a class="reference internal" href="command-snippet.html#term-program-interface-model"><span class="xref std std-term">program interface model</span></a> (PIM) if it exists.</p>
+</li>
+<li><p class="first">Provide the list and the PIM as arguments of the <em>parse</em> function (<a class="reference internal" href="#algo-parse"><span class="std std-numref">Fig. 3.3</span></a>). Such function will do the following:</p>
+<ol class="arabic">
+<li><p class="first">Check for the existence of an <code class="docutils literal"><span class="pre">END_OF_OPTIONS</span></code> typed token (<a class="reference internal" href="#algo-check-end-of-options"><span class="std std-numref">Fig. 3.4</span></a>) and convert to operands all remaining tokens to the right.</p>
+</li>
+<li><p class="first">Repeat the following operation until the last two operations didn’t turn out to at least one context-free to semantic conversion:</p>
+<blockquote>
+<div><p>For each non-semantic token, <em>inferRight</em> (<a class="reference internal" href="#algo-infer-right"><span class="std std-numref">Fig. 3.5</span></a>) and <em>inferLeft</em> (<a class="reference internal" href="#algo-infer-left"><span class="std std-numref">Fig. 3.6</span></a>). Those functions will try to infer the semantic type by checking its siblings’. For example, if the left sibling token type is <code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNEMNT_LEFT_SIDE</span></code>, the only possible type for this token would be <code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNMENT_VALUE</span></code>.
+If the token type is “option part”, use the option descriptions from the PIM to try an exact match (<a class="reference internal" href="#algo-match-option-description"><span class="std std-numref">Fig. 3.8</span></a>).
+For example, the token is <code class="docutils literal"><span class="pre">--reverse</span></code>, and the <a class="reference internal" href="command-snippet.html#term-program-interface-model"><span class="xref std std-term">program interface model</span></a> contains an option description that exactly match <code class="docutils literal"><span class="pre">--reverse</span></code>.
+If no exact match is found, check for a pattern match with the option scheme (<a class="reference internal" href="#algo-reduce-candidates-with-scheme"><span class="std std-numref">Fig. 3.9</span></a>).
+For example, if the token <code class="docutils literal"><span class="pre">-pq</span></code> is encountered, and the program <a class="reference internal" href="command-snippet.html#term-option-scheme"><span class="xref std std-term">option scheme</span></a> is “Linux-Standard-Explicit” (see <a class="reference internal" href="command-snippet.html#id12"><span class="std std-numref">Table 2.2</span></a>), the only possible mapping for <code class="docutils literal"><span class="pre">ONE_DASH_WORD</span></code> will be <code class="docutils literal"><span class="pre">POSIX_STACKED_SHORT_SWITCHES</span></code>.
+Finally, increment <em>conversions</em> if the token type “is semantic”.</p>
+</div></blockquote>
+</li>
+</ol>
+</li>
+<li><p class="first">Until all tokens are of “semantic” type, prompt the user for a token type annotation and loop back at 3.2.</p>
+</li>
+</ol>
+<div class="figure align-left" id="id7">
+<span id="algo-parse"></span><img alt="../../_images/parse.svg" src="../../_images/parse.svg" /><p class="caption"><span class="caption-number">Fig. 3.3 </span><span class="caption-text">Parse function</span></p>
+</div>
+<div class="figure align-left" id="id8">
+<span id="algo-check-end-of-options"></span><img alt="../../_images/checkEndOfOptions.svg" src="../../_images/checkEndOfOptions.svg" /><p class="caption"><span class="caption-number">Fig. 3.4 </span><span class="caption-text">CheckEndOfOptions function</span></p>
+</div>
+<div class="figure align-left" id="id9">
+<span id="algo-infer-right"></span><img alt="../../_images/inferRight.svg" src="../../_images/inferRight.svg" /><p class="caption"><span class="caption-number">Fig. 3.5 </span><span class="caption-text">InferRight function</span></p>
+</div>
+<div class="figure align-left" id="id10">
+<span id="algo-infer-left"></span><img alt="../../_images/inferLeft.svg" src="../../_images/inferLeft.svg" /><p class="caption"><span class="caption-number">Fig. 3.6 </span><span class="caption-text">InferLeft function</span></p>
+</div>
+<div class="figure align-left" id="id11">
+<span id="algo-convert-to-semantic"></span><img alt="../../_images/convertToSemantic.svg" src="../../_images/convertToSemantic.svg" /><p class="caption"><span class="caption-number">Fig. 3.7 </span><span class="caption-text">ConvertToSemantic function</span></p>
+</div>
+<div class="figure align-left" id="id12">
+<span id="algo-match-option-description"></span><img alt="../../_images/matchOptionDescription.svg" src="../../_images/matchOptionDescription.svg" /><p class="caption"><span class="caption-number">Fig. 3.8 </span><span class="caption-text">MatchOptionDescription function</span></p>
+</div>
+<div class="figure align-left" id="id13">
+<span id="algo-reduce-candidates-with-scheme"></span><img alt="../../_images/reduceCandidatesWithScheme.svg" src="../../_images/reduceCandidatesWithScheme.svg" /><p class="caption"><span class="caption-number">Fig. 3.9 </span><span class="caption-text">ReduceCandidatesWithScheme function</span></p>
+</div>
+</div>
+<div class="section" id="edge-cases-and-extension-perspectives">
+<h2>3.5. Edge cases and extension perspectives<a class="headerlink" href="#edge-cases-and-extension-perspectives" title="Permalink to this headline">¶</a></h2>
+<p>Some argument constructs must be anticipated, so here is a list of problematic examples to open to further enhancements:</p>
+<ul class="simple">
+<li>How to model restricted operands such as in <a class="linuxman-url reference external" href="http://linux.die.net/man/1/dd"><em>dd(1)</em></a>? Although they look like headless options, dd operands are “typed”.</li>
+<li>How to model sub-commands, such as in <a class="linuxman-url reference external" href="http://linux.die.net/man/1/git"><em>git(1)</em></a>?</li>
+<li>How to model commands which operands can be another command, such as <cite>find -exec &lt;command&gt; {} ;</cite> ?</li>
+</ul>
+<hr class="docutils" />
+<div class="footnotes docutils container">
+<table class="docutils footnote" frame="void" id="headless-option-exception" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Although <code class="docutils literal"><span class="pre">HEADLESS_OPTION</span></code> is an option, it is very rare and should only be matched when defined in a <a class="reference internal" href="command-snippet.html#term-program-interface-model"><span class="xref std std-term">program interface model</span></a>, or reviewed by the user. So, by default we assume a <code class="docutils literal"><span class="pre">WORD</span></code> is not an option.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="query.html" class="btn btn-neutral float-right" title="4. Search query model" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="command-snippet.html" class="btn btn-neutral" title="2. Command snippet model" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jules Randolph.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.0.1-draft.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

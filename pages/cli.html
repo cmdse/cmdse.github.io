@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Command Line Interface &mdash; cmdse 0.0.1-draft.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="cmdse 0.0.1-draft.4 documentation" href="../index.html"/>
+        <link rel="next" title="2. Command snippet model" href="model/command-snippet.html"/>
+        <link rel="prev" title="Specifications for cmdse: the search engine of bash commands" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> cmdse
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1-draft.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Command Line Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#usage">1.1. Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#synopsis">1.1.1. Synopsis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#query-operands">1.1.2. QUERY operands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#options">1.1.3. OPTIONS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">1.1.4. Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#target-platform-requirements">1.2. Target platform requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="model/command-snippet.html">2. Command snippet model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/call-expression-parsing.html">3. Call expressions parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/query.html">4. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/user.html">5. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character-encoding.html">6. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design-faq.html">7. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manparse.html">8. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/bash-grammar.html">9. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/grammar-commons.html">10. Shared definitions for ABNF grammars</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">cmdse</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>1. Command Line Interface</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/pages/cli.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="command-line-interface">
+<h1>1. Command Line Interface<a class="headerlink" href="#command-line-interface" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="usage">
+<h2>1.1. Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="synopsis">
+<h3>1.1.1. Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ cmdse <span class="o">[</span>-i <span class="p">|</span> -c <span class="p">|</span> -x<span class="o">]</span> &lt;QUERY&gt;...
+</pre></div>
+</div>
+<p>The default behaviour of <strong class="program">cmdse</strong> is to process <code class="docutils literal"><span class="pre">&lt;QUERY&gt;...</span></code> operands and print the best-matched <a class="reference internal" href="model/command-snippet.html#term-command-snippet"><span class="xref std std-term">command snippets</span></a>.</p>
+</div>
+<div class="section" id="query-operands">
+<h3>1.1.2. QUERY operands<a class="headerlink" href="#query-operands" title="Permalink to this headline">¶</a></h3>
+<p>A QUERY operand is a <a class="reference internal" href="model/command-snippet.html#term-word"><span class="xref std std-term">word</span></a> witch is evaluated either as a <a class="reference internal" href="model/query.html#term-query-selector"><span class="xref std std-term">query selectors</span></a> or a <a class="reference internal" href="model/query.html#term-query-literal"><span class="xref std std-term">query literals</span></a>.</p>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-number">Listing 1.1 </span><span class="caption-text">Example with a <a class="reference internal" href="model/query.html#term-program-query-selector"><span class="xref std std-term">program query selector</span></a> and two <a class="reference internal" href="model/query.html#term-query-literal"><span class="xref std std-term">query literals</span></a></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ cmdse :tar extract files
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="options">
+<h3>1.1.3. OPTIONS<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h3>
+<dl class="option">
+<dt id="cmdoption-cmdse-i">
+<code class="descname">-i</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--interactive</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-cmdse-i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launch <strong>i</strong>nteractive shell mode.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-cmdse-c">
+<code class="descname">-c</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--copy-first</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-cmdse-c" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>C</strong>opy the first result command snippet in the clipboard.</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-cmdse-x">
+<code class="descname">-x</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--execute-first</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-cmdse-x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Launch interactive mode and prompt the user if he wants to e<strong>x</strong>ecute the first <a class="reference internal" href="model/command-snippet.html#term-command-snippet"><span class="xref std std-term">command snippet</span></a> found with the joint query.
+For any <a class="reference internal" href="model/command-snippet.html#term-command-parameter"><span class="xref std std-term">command parameter</span></a>, the user will be prompt to provide an input.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="examples">
+<h3>1.1.4. Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<div class="literal-block-wrapper docutils container" id="id2">
+<div class="code-block-caption"><span class="caption-number">Listing 1.2 </span><span class="caption-text">Query matching literal sequence “tar unpack”</span><a class="headerlink" href="#id2" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ cmdse tar unpack
+tar -xvf <span class="o">[</span>resource-path.tar.gz<span class="o">]</span>
+V3: Unpack and extract the content of the compressed archive located in
+<span class="o">[</span>resource-path.tar.gz<span class="o">]</span> to the current working directory.
+
+tar -C <span class="o">[</span>target-path<span class="o">]</span> -xzf <span class="o">[</span>resource-path.tar.gz<span class="o">]</span>
+V3: Unpack and extract the content of the compressed archive located in
+<span class="o">[</span>resource-path.tar.gz<span class="o">]</span> to <span class="o">[</span>target-path<span class="o">]</span> directory.
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-number">Listing 1.3 </span><span class="caption-text">Query matching all snippets using “docker” program executable</span><a class="headerlink" href="#id3" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>&gt; cmdse :docker
+docker run -it <span class="o">[</span>container<span class="o">]</span> sh
+<span class="o">(</span>V10&gt;<span class="o">)</span> Run shell in the <span class="o">[</span>container<span class="o">]</span> in interactive mode.
+
+docker rm <span class="k">$(</span>docker ps -a -q -f <span class="nv">status</span><span class="o">=</span>exited<span class="k">)</span>
+<span class="o">(</span>V10&gt;<span class="o">)</span> Remove all containers which status is exited.
+
+docker ps -a
+<span class="o">(</span>V10&gt;<span class="o">)</span> List all existing containers.
+
+docker stop <span class="k">$(</span>docker ps -a -q<span class="k">)</span>
+<span class="o">(</span>V10&gt;<span class="o">)</span> Stop all running containers.
+
+docker rmi <span class="k">$(</span>docker images -q -a<span class="k">)</span>
+<span class="o">(</span>V10&gt;<span class="o">)</span> Remove all existing images.
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-number">Listing 1.4 </span><span class="caption-text">Query restricted to “docker” program executable matching literal sequence “remove all containers”</span><a class="headerlink" href="#id4" title="Permalink to this code">¶</a></div>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ cmdse :docker remove all containers
+docker rm <span class="k">$(</span>docker ps -a -q<span class="k">)</span>
+<span class="o">(</span>V10&gt;<span class="o">)</span> Remove all containers.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="target-platform-requirements">
+<h2>1.2. Target platform requirements<a class="headerlink" href="#target-platform-requirements" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-requirement admonition" id="requirement-target-platform-posix">
+<p class="first admonition-title">Target Platform Posix</p>
+<p class="last">The <strong>cmdse</strong> command line tool targets modern Linux-GNU distributions with 3.X and 4.X kernels.</p>
+</div>
+<div class="admonition-requirement admonition" id="requirement-target-terminal">
+<p class="first admonition-title">Target Terminal</p>
+<p>The <strong>cmdse</strong> command line tool should be compatible with the following terminals:</p>
+<ul class="last simple">
+<li>Any modern terminal emulator, such as <code class="docutils literal"><span class="pre">xterm</span></code>, <code class="docutils literal"><span class="pre">konsole</span></code>, <code class="docutils literal"><span class="pre">GNOME</span> <span class="pre">terminal</span></code> …</li>
+<li>Linux virtual console</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="model/command-snippet.html" class="btn btn-neutral float-right" title="2. Command snippet model" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Specifications for cmdse: the search engine of bash commands" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jules Randolph.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.0.1-draft.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

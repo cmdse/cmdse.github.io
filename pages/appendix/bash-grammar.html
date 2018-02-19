@@ -1,0 +1,566 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9. Bash V2 grammar &mdash; cmdse 0.0.1-draft.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="cmdse 0.0.1-draft.4 documentation" href="../../index.html"/>
+        <link rel="next" title="10. Shared definitions for ABNF grammars" href="grammar-commons.html"/>
+        <link rel="prev" title="8. Manparse" href="../manparse.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> cmdse
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1-draft.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">1. Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/command-snippet.html">2. Command snippet model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/call-expression-parsing.html">3. Call expressions parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/query.html">4. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../model/user.html">5. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../character-encoding.html">6. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design-faq.html">7. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manparse.html">8. Manparse</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">9. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="grammar-commons.html">10. Shared definitions for ABNF grammars</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">cmdse</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+    <li>9. Bash V2 grammar</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/pages/appendix/bash-grammar.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bash-v2-grammar">
+<h1>9. Bash V2 grammar<a class="headerlink" href="#bash-v2-grammar" title="Permalink to this headline">¶</a></h1>
+<p>This grammar is defined with the <a class="reference external" href="https://en.wikipedia.org/wiki/Backus%E2%80%93Naur_form">BNF</a> syntax for context-free grammars.
+The syntax is valid for <a class="reference external" href="https://en.wikipedia.org/wiki/ASCII">US-ASCII</a> encoded text.</p>
+<div class="highlight-bnf"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nc">ALPHA</span><span class="p">&gt;</span> <span class="o">::=</span> a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|
+             A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z
+
+<span class="p">&lt;</span><span class="nc">DIGIT</span><span class="p">&gt;</span> <span class="o">::=</span> 0|1|2|3|4|5|6|7|8|9
+
+<span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> <span class="o">::=</span> <span class="p">&lt;</span><span class="nc">DIGIT</span><span class="p">&gt;</span>
+           | <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">DIGIT</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="o">::=</span> <span class="p">&lt;</span><span class="nc">ALPHA</span><span class="p">&gt;</span>
+         | <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">ALPHA</span><span class="p">&gt;</span>
+         | <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> &#39;_&#39;
+
+<span class="p">&lt;</span><span class="nc">WORD-LIST</span><span class="p">&gt;</span> <span class="o">::=</span> <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+             |  <span class="p">&lt;</span><span class="nc">WORD-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">ASSIGNMENT-WORD</span><span class="p">&gt;</span> <span class="o">::=</span> <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> &#39;=&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+
+
+<span class="p">&lt;</span><span class="nc">REDIRECTION</span><span class="p">&gt;</span> <span class="o">::=</span>  &#39;&gt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  &#39;&lt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&gt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&lt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  &#39;&gt;&gt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&gt;&gt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  &#39;&lt;&lt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&lt;&lt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  &#39;&lt;&amp;&#39; <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&lt;&amp;&#39; <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span>
+                |  &#39;&gt;&amp;&#39; <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&gt;&amp;&#39; <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span>
+                |  &#39;&lt;&amp;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&lt;&amp;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  &#39;&gt;&amp;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&gt;&amp;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  &#39;&lt;&lt;-&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&lt;&lt;-&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  &#39;&gt;&amp;&#39; &#39;-&#39;
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&gt;&amp;&#39; &#39;-&#39;
+                |  &#39;&lt;&amp;&#39; &#39;-&#39;
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&lt;&amp;&#39; &#39;-&#39;
+                |  &#39;&amp;&gt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&lt;&gt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  &#39;&lt;&gt;&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  &#39;&gt;|&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">NUMBER</span><span class="p">&gt;</span> &#39;&gt;|&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">SIMPLE-COMMAND-ELEMENT</span><span class="p">&gt;</span> <span class="o">::=</span> <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+                          |  <span class="p">&lt;</span><span class="nc">ASSIGNMENT-WORD</span><span class="p">&gt;</span>
+                          |  <span class="p">&lt;</span><span class="nc">REDIRECTION</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">REDIRECTION-LIST</span><span class="p">&gt;</span> <span class="o">::=</span> <span class="p">&lt;</span><span class="nc">REDIRECTION</span><span class="p">&gt;</span>
+                    |  <span class="p">&lt;</span><span class="nc">REDIRECTION-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">REDIRECTION</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">SIMPLE-COMMAND</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">SIMPLE-COMMAND-ELEMENT</span><span class="p">&gt;</span>
+                   |  <span class="p">&lt;</span><span class="nc">SIMPLE-COMMAND</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">SIMPLE-COMMAND-ELEMENT</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">COMMAND</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">SIMPLE-COMMAND</span><span class="p">&gt;</span>
+            |  <span class="p">&lt;</span><span class="nc">SHELL-COMMAND</span><span class="p">&gt;</span>
+            |  <span class="p">&lt;</span><span class="nc">SHELL-COMMAND</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">REDIRECTION-LIST</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">SHELL-COMMAND</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">FOR-COMMAND</span><span class="p">&gt;</span>
+                  |  <span class="p">&lt;</span><span class="nc">CASE-COMMAND</span><span class="p">&gt;</span>
+                  |  while <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> do <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> done
+                  |  until <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> do <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> done
+                  |  <span class="p">&lt;</span><span class="nc">SELECT-COMMAND</span><span class="p">&gt;</span>
+                  |  <span class="p">&lt;</span><span class="nc">IF-COMMAND</span><span class="p">&gt;</span>
+                  |  <span class="p">&lt;</span><span class="nc">SUBSHELL</span><span class="p">&gt;</span>
+                  |  <span class="p">&lt;</span><span class="nc">GROUP-COMMAND</span><span class="p">&gt;</span>
+                  |  <span class="p">&lt;</span><span class="nc">FUNCTION-DEF</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">FOR-COMMAND</span><span class="p">&gt;</span> <span class="o">::=</span>  for <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> do <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> done
+            |  for <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> &#39;{&#39; <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> &#39;}&#39;
+            |  for <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> &#39;;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> do <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> done
+            |  for <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> &#39;;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> &#39;{&#39; <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> &#39;}&#39;
+            |  for <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> in <span class="p">&lt;</span><span class="nc">WORD-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">LIST-TERMINATOR</span><span class="p">&gt;</span>
+                   <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> do <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> done
+            |  for <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> in <span class="p">&lt;</span><span class="nc">WORD-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">LIST-TERMINATOR</span><span class="p">&gt;</span>
+                   <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> &#39;{&#39; <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> &#39;}&#39;
+
+<span class="p">&lt;</span><span class="nc">SELECT-COMMAND</span><span class="p">&gt;</span> <span class="o">::=</span>  select <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> do <span class="p">&lt;</span><span class="nc">LIST</span><span class="p">&gt;</span> done
+                   |  select <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> &#39;{&#39; <span class="p">&lt;</span><span class="nc">LIST</span><span class="p">&gt;</span> &#39;}&#39;
+                   |  select <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> &#39;;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> do <span class="p">&lt;</span><span class="nc">LIST</span><span class="p">&gt;</span> done
+                   |  select <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> &#39;;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> &#39;{&#39; LIST &#39;}&#39;
+                   |  select <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> in <span class="p">&lt;</span><span class="nc">WORD-LIST</span><span class="p">&gt;</span>
+                           <span class="p">&lt;</span><span class="nc">LIST-TERMINATOR</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> do <span class="p">&lt;</span><span class="nc">LIST</span><span class="p">&gt;</span> done
+                   |  select <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> in <span class="p">&lt;</span><span class="nc">WORD-LIST</span><span class="p">&gt;</span>
+                           <span class="p">&lt;</span><span class="nc">LIST-TERMINATOR</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> &#39;{&#39; <span class="p">&lt;</span><span class="nc">LIST</span><span class="p">&gt;</span> &#39;}&#39;
+
+<span class="p">&lt;</span><span class="nc">CASE-COMMAND</span><span class="p">&gt;</span> <span class="o">::=</span>  case <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> in <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> esac
+                 |  case <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> in <span class="p">&lt;</span><span class="nc">CASE-CLAUSE-SEQUENCE</span><span class="p">&gt;</span>
+                         <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> esac
+                 |  case <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> in <span class="p">&lt;</span><span class="nc">CASE-CLAUSE</span><span class="p">&gt;</span> esac
+
+<span class="p">&lt;</span><span class="nc">FUNCTION-DEF</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> &#39;(&#39; &#39;)&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">GROUP-COMMAND</span><span class="p">&gt;</span>
+                 |  function <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> &#39;(&#39; &#39;)&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">GROUP-COMMAND</span><span class="p">&gt;</span>
+                 |  function <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">GROUP-COMMAND</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">SUBSHELL</span><span class="p">&gt;</span> <span class="o">::=</span>  &#39;(&#39; <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> &#39;)&#39;
+
+<span class="p">&lt;</span><span class="nc">IF-COMMAND</span><span class="p">&gt;</span> <span class="o">::=</span> if <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> then <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> fi
+          | if <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> then <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> else <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> fi
+          | if <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> then <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">ELIF-CLAUSE</span><span class="p">&gt;</span> fi
+
+<span class="p">&lt;</span><span class="nc">GROUP-COMMAND</span><span class="p">&gt;</span> <span class="o">::=</span>  &#39;{&#39; <span class="p">&lt;</span><span class="nc">LIST</span><span class="p">&gt;</span> &#39;}&#39;
+
+<span class="p">&lt;</span><span class="nc">ELIF-CLAUSE</span><span class="p">&gt;</span> <span class="o">::=</span> elif <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> then <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span>
+           | elif <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> then <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> else <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span>
+           | elif <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> then <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">ELIF-CLAUSE</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">CASE-CLAUSE</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">PATTERN-LIST</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">CASE-CLAUSE-SEQUENCE</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">PATTERN-LIST</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">PATTERN-LIST</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">PATTERN</span><span class="p">&gt;</span> &#39;)&#39; <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span>
+                 |  <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">PATTERN</span><span class="p">&gt;</span> &#39;)&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span>
+                 |  <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> &#39;(&#39; <span class="p">&lt;</span><span class="nc">PATTERN</span><span class="p">&gt;</span> &#39;)&#39; <span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span>
+                 |  <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> &#39;(&#39; <span class="p">&lt;</span><span class="nc">PATTERN</span><span class="p">&gt;</span> &#39;)&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">CASE-CLAUSE-SEQUENCE</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">PATTERN-LIST</span><span class="p">&gt;</span> &#39;;;&#39;
+                         |  <span class="p">&lt;</span><span class="nc">CASE-CLAUSE-SEQUENCE</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">PATTERN-LIST</span><span class="p">&gt;</span> &#39;;;&#39;
+
+<span class="p">&lt;</span><span class="nc">PATTERN</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+            |  <span class="p">&lt;</span><span class="nc">PATTERN</span><span class="p">&gt;</span> &#39;|&#39; <span class="p">&lt;</span><span class="nc">WORD</span><span class="p">&gt;</span>
+
+
+<span class="p">&lt;</span><span class="nc">LIST</span><span class="p">&gt;</span> <span class="o">::=</span>   <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">LIST0</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">COMPOUND-LIST</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">LIST</span><span class="p">&gt;</span>
+                  |  <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">LIST0</span><span class="p">&gt;</span> <span class="o">::=</span>   <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span> &#39;\n&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span>
+           |  <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span> &#39;&amp;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span>
+           |  <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span> &#39;;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span> <span class="o">::=</span>   <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span> &#39;&amp;&amp;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span>
+           |  <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span> &#39;||&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span>
+           |  <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span> &#39;&amp;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span>
+           |  <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span> &#39;;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span>
+           |  <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span> &#39;\n&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">LIST1</span><span class="p">&gt;</span>
+           |  <span class="p">&lt;</span><span class="nc">PIPELINE-COMMAND</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">LIST-TERMINATOR</span><span class="p">&gt;</span> <span class="o">::=</span> &#39;\n&#39;
+                   |  &#39;;&#39;
+
+<span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="o">::=</span>
+                  |  <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> &#39;\n&#39;
+
+<span class="p">&lt;</span><span class="nc">SIMPLE-LIST</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span>
+                |  <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span> &#39;&amp;&#39;
+                |  <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span> &#39;;&#39;
+
+<span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span> <span class="o">::=</span>  <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span> &#39;&amp;&amp;&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span>
+                 |  <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span> &#39;||&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span>
+                 |  <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span> &#39;&amp;&#39; <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span>
+                 |  <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span> &#39;;&#39; <span class="p">&lt;</span><span class="nc">SIMPLE-LIST1</span><span class="p">&gt;</span>
+                 |  <span class="p">&lt;</span><span class="nc">PIPELINE-COMMAND</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">PIPELINE-COMMAND</span><span class="p">&gt;</span> <span class="o">::=</span> <span class="p">&lt;</span><span class="nc">PIPELINE</span><span class="p">&gt;</span>
+                    |  &#39;!&#39; <span class="p">&lt;</span><span class="nc">PIPELINE</span><span class="p">&gt;</span>
+                    |  <span class="p">&lt;</span><span class="nc">TIMESPEC</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">PIPELINE</span><span class="p">&gt;</span>
+                    |  <span class="p">&lt;</span><span class="nc">TIMESPEC</span><span class="p">&gt;</span> &#39;!&#39; <span class="p">&lt;</span><span class="nc">PIPELINE</span><span class="p">&gt;</span>
+                    |  &#39;!&#39; <span class="p">&lt;</span><span class="nc">TIMESPEC</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">PIPELINE</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">PIPELINE</span><span class="p">&gt;</span> <span class="o">::=</span>
+          <span class="p">&lt;</span><span class="nc">PIPELINE</span><span class="p">&gt;</span> &#39;|&#39; <span class="p">&lt;</span><span class="nc">NEWLINE-LIST</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nc">PIPELINE</span><span class="p">&gt;</span>
+       |  <span class="p">&lt;</span><span class="nc">COMMAND</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nc">TIME-OPT</span><span class="p">&gt;</span> <span class="o">::=</span> &#39;-p&#39;
+
+<span class="p">&lt;</span><span class="nc">TIMESPEC</span><span class="p">&gt;</span> <span class="o">::=</span>  time
+             |  time <span class="p">&lt;</span><span class="nc">TIME-OPT</span><span class="p">&gt;</span>
+
+.XE &quot;BNF (Backus-Naur Form)&quot;
+.XE &quot;bash&quot; &quot;syntax, BNF form of&quot;
+</pre></div>
+</td></tr></table></div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="grammar-commons.html" class="btn btn-neutral float-right" title="10. Shared definitions for ABNF grammars" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../manparse.html" class="btn btn-neutral" title="8. Manparse" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jules Randolph.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.0.1-draft.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

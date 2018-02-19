@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. Search query model &mdash; cmdse 0.0.1-draft.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="cmdse 0.0.1-draft.4 documentation" href="../../index.html"/>
+        <link rel="next" title="5. User model" href="user.html"/>
+        <link rel="prev" title="3. Call expressions parsing" href="call-expression-parsing.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> cmdse
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1-draft.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">1. Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-snippet.html">2. Command snippet model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="call-expression-parsing.html">3. Call expressions parsing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Search query model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#definitions">4.1. Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#syntax">4.2. Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#list-of-selectors">4.3. List of selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#search-sort-requirements">4.4. Search sort requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">5. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../character-encoding.html">6. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design-faq.html">7. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manparse.html">8. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash-grammar.html">9. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/grammar-commons.html">10. Shared definitions for ABNF grammars</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">cmdse</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+    <li>4. Search query model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/pages/model/query.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="search-query-model">
+<h1>4. Search query model<a class="headerlink" href="#search-query-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="definitions">
+<h2>4.1. Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
+<dl class="glossary docutils">
+<dt id="term-program-query-selector">program query selector</dt>
+<dd>The empty <a class="reference internal" href="#term-query-selector"><span class="xref std std-term">query selector</span></a> which only selects <a class="reference internal" href="command-snippet.html#term-command-snippet"><span class="xref std std-term">command snippets</span></a> that call the program name given as query selector value.
+For example, <code class="docutils literal"><span class="pre">:dd</span></code> will restrict the selection to snippets containing reference to the <code class="docutils literal"><span class="pre">dd</span></code> program.</dd>
+<dt id="term-query-literal">query literal</dt>
+<dd>The query answer will try to match any one of those provided literals.
+Such a literal has the shape of any word that is not composed of special characters with the exception of <code class="docutils literal"><span class="pre">-</span></code> and <code class="docutils literal"><span class="pre">_</span></code>.</dd>
+<dt id="term-query-selector">query selector</dt>
+<dd><p class="first">It constrains the scope of the current query. Such a selector has the form of two words separated with the <code class="docutils literal"><span class="pre">:</span></code> character.
+The first, optional word is the operator (<em>what</em> is selected) and the second word is the <em>value</em>.
+When the operator is omitted, the <a class="reference internal" href="#term-program-query-selector"><span class="xref std std-term">program selector</span></a> is processed.</p>
+<div class="last highlight-text"><div class="highlight"><pre><span></span>[OPERATOR]:VALUE
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+<div class="section" id="syntax">
+<h2>4.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The program internal string representations are in <a class="reference internal" href="../character-encoding.html#term-utf-8"><span class="xref std std-term">utf-8</span></a> and I/O operation will be transcoded to the environement encoding.
+See <a class="reference internal" href="../character-encoding.html"><span class="doc">Character encoding</span></a>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is a normalized syntax. If the user inputs forbidden characters, they shall be stripped out.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">See the <a class="reference internal" href="../appendix/grammar-commons.html"><span class="doc">Shared definitions for ABNF grammars</span></a> section for the depending token definitions.</p>
+</div>
+<div class="literal-block-wrapper docutils container" id="id1">
+<div class="code-block-caption"><span class="caption-number">Listing 4.1 </span><span class="caption-text">Query formal <span class="target" id="index-0"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7405.html"><strong>ABNF</strong></a> syntax definition</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="highlight-abnf"><div class="highlight"><pre><span></span><span class="nc">SELECTOR-CHAR</span>            <span class="o">=</span> <span class="k">ALPHA</span> <span class="o">/</span> <span class="k">DIGIT</span> <span class="o">/</span> <span class="nc">HYPHEN</span> <span class="o">/</span> <span class="nc">UNDERSCORE</span>
+                         <span class="c1">; ASCII alphanum character or hyphen or underscore</span>
+<span class="nc">LITERAL-CHAR</span>             <span class="o">=</span> <span class="nc">UTF8-2</span> <span class="o">/</span> <span class="nc">UTF8-3</span> <span class="o">/</span> <span class="nc">UTF8-4</span> <span class="o">/</span> <span class="k">ALPHA</span> <span class="o">/</span> <span class="k">DIGIT</span> <span class="o">/</span> <span class="nc">HYPHEN</span> <span class="o">/</span> <span class="nc">UNDERSCORE</span>
+                         <span class="c1">; UTF-8 alphanum character or hyphen or underscore</span>
+<span class="nc">LITERAL</span>                  <span class="o">=</span> <span class="o">1*</span><span class="p">(</span><span class="nc">LITERAL-CHAR</span><span class="p">)</span>
+                         <span class="c1">; A literal is a sequence of non-special, non-whitespace characters</span>
+                         <span class="c1">; or hyphen or underscore</span>
+<span class="nc">SELECTOR-OPERATOR</span>        <span class="o">=</span> <span class="o">1*</span><span class="p">(</span><span class="nc">SELECTOR-CHAR</span><span class="p">)</span>
+<span class="nc">SELECTOR-VALUE</span>           <span class="o">=</span> <span class="o">1*</span><span class="p">(</span><span class="nc">SELECTOR-CHAR</span><span class="p">)</span>
+<span class="nc">SELECTOR</span>                 <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="nc">SELECTOR-OPERATOR</span><span class="p">)</span> <span class="nc">COLON</span> <span class="nc">SELECTOR-VALUE</span>
+                         <span class="c1">; A selector is a sequence of non-special, non-whitespace</span>
+                         <span class="c1">; ASCII characters or hyphen or underscore, preceded with a colon</span>
+<span class="nc">QUERY-WORD</span>               <span class="o">=</span> <span class="nc">SELECTOR</span> <span class="o">/</span> <span class="nc">LITERAL</span>
+<span class="nc">QUERY</span>                    <span class="o">=</span> <span class="nc">QUERY-WORD</span> <span class="o">/</span> <span class="p">(</span><span class="nc">QUERY-WORD</span> <span class="k">WSP</span>-<span class="nc">SEQUENCE</span> <span class="nc">QUERY</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="list-of-selectors">
+<h2>4.3. List of selectors<a class="headerlink" href="#list-of-selectors" title="Permalink to this headline">¶</a></h2>
+<p><cite>to be written</cite></p>
+</div>
+<div class="section" id="search-sort-requirements">
+<h2>4.4. Search sort requirements<a class="headerlink" href="#search-sort-requirements" title="Permalink to this headline">¶</a></h2>
+<div class="admonition-requirement admonition" id="requirement-result-by-relevance">
+<p class="first admonition-title">Result By Relevance</p>
+<p class="last">Results should be sorted by relevance.</p>
+</div>
+<div class="admonition-requirement admonition" id="requirement-relevance-composition">
+<p class="first admonition-title">Relevance Composition</p>
+<p>Relevance should be a composition of</p>
+<ul class="last simple">
+<li>string matching in snippet description</li>
+<li>snippet popularity</li>
+<li>snippet reputation</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="user.html" class="btn btn-neutral float-right" title="5. User model" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="call-expression-parsing.html" class="btn btn-neutral" title="3. Call expressions parsing" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jules Randolph.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.0.1-draft.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
