@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>10. Glossary &mdash; cmdse 0.0.1-draft.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="cmdse 0.0.1-draft.5 documentation" href="../index.html"/>
+        <link rel="next" title="11. Bash V2 grammar" href="appendix/bash-grammar.html"/>
+        <link rel="prev" title="9. Design FAQ" href="design-faq.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> cmdse
+          
+
+          
+            
+            <img src="../_static/cmdse.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1-draft.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cli.html">1. Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/command-snippet.html">2. Command snippet model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/call-expression-parsing.html">3. Call expressions parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/pim.html">4. Program Interface Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/query.html">5. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/user.html">6. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manparse.html">7. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character-encoding.html">8. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design-faq.html">9. Design FAQ</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">10. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/bash-grammar.html">11. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/grammar-commons.html">12. Shared definitions for ABNF grammars</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">cmdse</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>10. Glossary</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/pages/glossary.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="glossary">
+<h1>10. Glossary<a class="headerlink" href="#glossary" title="Permalink to this headline">¶</a></h1>
+<dl class="glossary docutils">
+<dt id="term-builtin-command">builtin command</dt>
+<dd>[Unix shells] A <a class="reference internal" href="#term-command-identifier"><span class="xref std std-term">command identifier</span></a> which execution is provided and implemented within the shell.</dd>
+<dt id="term-call-expression">call expression</dt>
+<dd>[<strong>cmdse</strong>] A call expression is a valid shell-processable character sequence of optional variable assignments followed by a word reffered to as the “<a class="reference internal" href="#term-command-identifier"><span class="xref std std-term">command identifier</span></a>” and a list of <a class="reference internal" href="#term-word"><span class="xref std std-term">words</span></a>, namely “arguments”. This command identifier cannot be a <a class="reference internal" href="#term-compound-command"><span class="xref std std-term">compound command</span></a>, since it is semantically closer to a control construct.
+When such expression is evaluated, the first word specifies the <a class="reference internal" href="#term-command-identifier"><span class="xref std std-term">command identifier</span></a>, and is passed as positional parameter zero. The remaining argument expressions are passed as positional parameters to the invoked command. When a substitution expression is encountered, it will be evaluated before the <a class="reference internal" href="#term-command-identifier"><span class="xref std std-term">command identifier</span></a> executable is invoked.</dd>
+<dt id="term-character">character</dt>
+<dd>The meaning of character is loose. It can either mean a <a class="reference internal" href="#term-glyph"><span class="xref std std-term">glyph</span></a> or a <a class="reference internal" href="#term-character-literal"><span class="xref std std-term">character literal</span></a>, which is not the same since a glyph can be the result of merging two literals as it often happens with dead keystrokes.
+For example, pressing <code class="kbd docutils literal"><span class="pre">`</span></code> followed by <code class="kbd docutils literal"><span class="pre">a</span></code> will result in <em>à</em> glyph, but in the UTF-8 encoding, is not the same as <em>à</em> symbol.</dd>
+<dt id="term-character-symbol">character symbol<dt id="term-character-literal">character literal</dt>
+<dd>A unique element in a <a class="reference internal" href="#term-charset"><span class="xref std std-term">charset</span></a>.</dd>
+<dt id="term-charset">charset</dt>
+<dd>Strictly saying, a set of symbols that can be used. Often confused with <a class="reference internal" href="#term-encoding"><span class="xref std std-term">encoding</span></a>.</dd>
+<dt id="term-command">command</dt>
+<dd>[Unix shells] A command is a one-line processable text chunk<a class="footnote-reference" href="#bash-exceptions" id="id1">[2]</a> to be converted in command invocation. Command invocation consists in passing to the operating system a file to be read and executed (extrapolated from the <a class="reference internal" href="#term-program-identifier"><span class="xref std std-term">program identifier</span></a>) with a list of arguments (<code class="docutils literal"><span class="pre">argv</span></code>).</dd>
+<dt id="term-command-identifier">command identifier</dt>
+<dd>[Unix shells] A command identifier is a word which maps to a set of instructions, either through a <a class="reference internal" href="#term-builtin-command"><span class="xref std std-term">builtin command</span></a>, a declared function,  or with a <a class="reference internal" href="#term-program-executable"><span class="xref std std-term">program executable</span></a>. See the POSIX.1-2008 section on command search and execution<a class="footnote-reference" href="#posix-search-execute" id="id2">[3]</a>.</dd>
+<dt id="term-command-parameter">command parameter</dt>
+<dd>[<strong>cmdse</strong>] A <a class="reference internal" href="#term-command-snippet"><span class="xref std std-term">command snippet</span></a> parameter is a string which should be substituted with user input when the corresponding snippet is invoked.</dd>
+<dt id="term-command-snippet">command snippet</dt>
+<dd>[<strong>cmdse</strong>] A shell-processable text.</dd>
+<dt id="term-command-snippet-metadata">command snippet metadata</dt>
+<dd><p class="first">[<strong>cmdse</strong>] Structured data about a <a class="reference internal" href="#term-command-snippet"><span class="xref std std-term">command snippet</span></a>. Such information may be comprised of the following fields:</p>
+<ul class="last simple">
+<li>a list of <a class="reference internal" href="#term-program-interface-model"><span class="xref std std-term">program interface models</span></a> reffered to in the snippet;</li>
+<li>text description of the snippet;</li>
+<li>a list of tags applied to the snippet;</li>
+<li>a list of <a class="reference internal" href="#term-command-parameter"><span class="xref std std-term">command parameters</span></a> consisting each of a name, a description field and an optional default value.</li>
+</ul>
+</dd>
+<dt id="term-compound-command">compound command</dt>
+<dd>[Unix shells] Compound commands are the shell programming constructs. Each construct begins with a reserved word or control operator and is terminated by a corresponding reserved word or operator. They are introduced by a keyword such as <code class="docutils literal"><span class="pre">if</span></code> or <code class="docutils literal"><span class="pre">while</span></code>.</dd>
+<dt id="term-encoding">encoding</dt>
+<dd>The in-memory representation of a <a class="reference internal" href="#term-charset"><span class="xref std std-term">charset</span></a>.</dd>
+<dt id="term-glyph">glyph</dt>
+<dd>The non-reductable sum of pixels corresponding to a representation of it’s corresponding <a class="reference internal" href="#term-character-symbol"><span class="xref std std-term">character symbol(s)</span></a>.</dd>
+<dt id="term-operand">operand</dt>
+<dd>[Unix shells] An operand is a non-option <a class="reference internal" href="#term-command-identifier"><span class="xref std std-term">command identifier</span></a> argument, typically the subject(s) upon which the command will operate (file name, remote, … etc).</dd>
+<dt id="term-option-description">option description</dt>
+<dd>[<strong>cmdse</strong>] Structured data composed of a description text field and a collection of match models.
+Each match model is related to an <a class="reference internal" href="#term-option-expression-variant"><span class="xref std std-term">option expression variant</span></a> and has a one-or-two groups regular expression.
+When two groups can be matched, the latest is the option parameter of an explicit option assignments.</dd>
+<dt id="term-option-description-model">option description model</dt>
+<dd>[<strong>cmdse</strong>] An option description model is a set of <a class="reference internal" href="#term-option-description"><span class="xref std std-term">option descriptions</span></a>.</dd>
+<dt id="term-option-expression-variant">option expression variant</dt>
+<dd>[<strong>cmdse</strong>] A pattern to recognize one or many arguments as members of an option flag or option assignment (see <a class="reference internal" href="model/command-snippet.html#option-expression-variants"><span class="std std-numref">Table 2.1</span></a>).</dd>
+<dt id="term-option-scheme">option scheme</dt>
+<dd>[<strong>cmdse</strong>] A set of <a class="reference internal" href="#term-option-expression-variant"><span class="xref std std-term">option expression variants</span></a> supported by a program command line interface (see <a class="reference internal" href="model/command-snippet.html#option-expression-variants"><span class="std std-numref">Table 2.1</span></a>).</dd>
+<dt id="term-program-executable">program executable</dt>
+<dd>[Unix shells] An executable file which supports a set of text arguments. Identified in the system with a unique path.</dd>
+<dt id="term-program-identifier">program identifier</dt>
+<dd>[Unix shells] The name of a <a class="reference internal" href="#term-program-executable"><span class="xref std std-term">program executable</span></a> file that the shell will try to locate with <span class="target" id="index-0"></span><code class="xref std std-envvar docutils literal"><span class="pre">PATH</span></code> environment variable.</dd>
+<dt id="term-program-interface-model">program interface model</dt>
+<dd><p class="first">[<strong>cmdse</strong>] Structured data describing the command line interface capabilities of a <a class="reference internal" href="#term-program-executable"><span class="xref std std-term">program executable</span></a> identified by its <a class="reference internal" href="#term-program-identifier"><span class="xref std std-term">program identifier</span></a>. The capabilities are defined through:</p>
+<ul class="simple">
+<li>an <a class="reference internal" href="#term-option-scheme"><span class="xref std std-term">option scheme</span></a>;</li>
+<li>a set of <a class="reference internal" href="#term-synopsis"><span class="xref std std-term">synopsis</span></a>;</li>
+<li>an <a class="reference internal" href="#term-option-description-model"><span class="xref std std-term">option description model</span></a>.</li>
+</ul>
+<p class="last">Those are defined for a peculiar <a class="reference internal" href="#term-version-range"><span class="xref std std-term">version range</span></a>.</p>
+</dd>
+<dt id="term-rune">rune<dt id="term-code-point">code point</dt>
+<dd>A representation in the form of character of a unicode byte sequence.
+Rune is the Go synonym for a code point.</dd>
+<dt id="term-string">string</dt>
+<dd>An arbitrary sequence of bytes. Note that with this definition, a string alone is not sufficient to get a textual representation. A <a class="reference internal" href="#term-charset"><span class="xref std std-term">charset</span></a> and its <a class="reference internal" href="#term-encoding"><span class="xref std std-term">encoding</span></a> must be provided along.</dd>
+<dt id="term-string-literal">string literal</dt>
+<dd>A <a class="reference internal" href="#term-string"><span class="xref std std-term">string</span></a> with valid <a class="reference internal" href="#term-utf-8"><span class="xref std std-term">utf-8</span></a> sequences.</dd>
+<dt id="term-synopsis">synopsis</dt>
+<dd>[Unix shells] A text pattern describing a set of possible <a class="reference internal" href="#term-call-expression"><span class="xref std std-term">call expressions</span></a>.</dd>
+<dt id="term-ucs-2">ucs-2</dt>
+<dd>An <a class="reference internal" href="#term-encoding"><span class="xref std std-term">encoding</span></a> for a subset of the <a class="reference external" href="https://en.wikipedia.org/wiki/Unicode">Unicode</a> <a class="reference internal" href="#term-charset"><span class="xref std std-term">charset</span></a>. This subset is known as the Basic Multilingual Plane and is composed of the first 65,536 <a class="reference internal" href="#term-code-point"><span class="xref std std-term">code points</span></a>. This encoding uses 2-bytes for each character.</dd>
+<dt id="term-utf-8">utf-8</dt>
+<dd>An <a class="reference internal" href="#term-encoding"><span class="xref std std-term">encoding</span></a> for the <a class="linuxman-url reference external" href="http://linux.die.net/man/7/unicode"><em>unicode(7)</em></a> <a class="reference internal" href="#term-charset"><span class="xref std std-term">charset</span></a>. See <a class="linuxman-url reference external" href="http://linux.die.net/man/7/utf-8"><em>utf-8(7)</em></a>.</dd>
+<dt id="term-version-range">version range</dt>
+<dd>[<strong>cmdse</strong>] A version range is an expression describing a range of software versions. Such an expression is written with semver syntax<a class="footnote-reference" href="#semver" id="id3">[1]</a>.</dd>
+<dt id="term-word">word</dt>
+<dd>[Unix shells] “Word” has a special meaning in shells. In a quote-free context, it is a sequence of non-meta characters separated with blanks. Otherwise, any quoted expression is interpreted as a single word.</dd>
+</dl>
+<hr class="docutils" />
+<div class="footnotes docutils container">
+<table class="docutils footnote" frame="void" id="semver" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[1]</a></td><td>Semantic versionning definition is available <a class="reference external" href="https://semver.org/">here: semver.org</a>. Semver ranges are defined <a class="reference external" href="https://semver.npmjs.com/">here: semver.npmjs.com</a>.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="bash-exceptions" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[2]</a></td><td>Four exceptions: multiple lines can be processed in one row when terminated with the escape character, <code class="docutils literal"><span class="pre">\</span></code> and <a class="reference external" href="https://en.wikipedia.org/wiki/Here_document">here-documents</a> are read multilines until the provided WORD is matched. Also <a class="reference internal" href="#term-compound-command"><span class="xref std std-term">compound commands</span></a> such as <code class="docutils literal"><span class="pre">for</span></code> construct may be written in multiple lines, needing some look-ahead line processing before execution. Finally, the semicolon <code class="docutils literal"><span class="pre">;</span></code> metacharacter is interpreted as a line delimiter.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="posix-search-execute" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[3]</a></td><td>See <a class="reference external" href="http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_09_01_01">POSIX.1-2008, sec. 2.9.1</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="appendix/bash-grammar.html" class="btn btn-neutral float-right" title="11. Bash V2 grammar" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="design-faq.html" class="btn btn-neutral" title="9. Design FAQ" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jules Randolph.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.0.1-draft.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

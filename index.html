@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Specifications for cmdse: the search engine of bash commands &mdash; cmdse 0.0.1-draft.4 documentation</title>
+  <title>Specifications for cmdse: the search engine of bash commands &mdash; cmdse 0.0.1-draft.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="cmdse 0.0.1-draft.4 documentation" href="#"/>
+    <link rel="top" title="cmdse 0.0.1-draft.5 documentation" href="#"/>
         <link rel="next" title="1. Command Line Interface" href="pages/cli.html"/> 
 
   
@@ -59,7 +59,7 @@
 
           
             
-            <img src="_static/cmdse.ico.svg" class="logo" />
+            <img src="_static/cmdse.svg" class="logo" />
           
           </a>
 
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.0.1-draft.4
+                0.0.1-draft.5
               </div>
             
           
@@ -93,13 +93,15 @@
 <li class="toctree-l1"><a class="reference internal" href="pages/cli.html">1. Command Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/model/command-snippet.html">2. Command snippet model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/model/call-expression-parsing.html">3. Call expressions parsing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/query.html">4. Search query model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/user.html">5. User model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/character-encoding.html">6. Character encoding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/design-faq.html">7. Design FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/manparse.html">8. Manparse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/appendix/bash-grammar.html">9. Bash V2 grammar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/appendix/grammar-commons.html">10. Shared definitions for ABNF grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/pim.html">4. Program Interface Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/query.html">5. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/user.html">6. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/manparse.html">7. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/character-encoding.html">8. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/design-faq.html">9. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/glossary.html">10. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/appendix/bash-grammar.html">11. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/appendix/grammar-commons.html">12. Shared definitions for ABNF grammars</a></li>
 </ul>
 
             
@@ -208,7 +210,6 @@
 <li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#alias">2.7.3. Alias</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#definitions">2.8. Definitions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pages/model/call-expression-parsing.html">3. Call expressions parsing</a><ul>
@@ -223,54 +224,65 @@
 <li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#edge-cases-and-extension-perspectives">3.5. Edge cases and extension perspectives</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/query.html">4. Search query model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/query.html#definitions">4.1. Definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/query.html#syntax">4.2. Syntax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/query.html#list-of-selectors">4.3. List of selectors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/query.html#search-sort-requirements">4.4. Search sort requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/pim.html">4. Program Interface Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/pim.html#synopses">4.1. Synopses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/pim.html#posix-1-2008-strict-rules">4.1.1. POSIX.1-2008 Strict Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/pim.html#posix-1-2008-guidance-rules">4.1.2. POSIX.1-2008 Guidance Rules</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/user.html">5. User model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/user.html#authentication">5.1. Authentication</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/user.html#reputation">5.2. Reputation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/pim.html#option-description-model">4.2. Option Description Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/pim.html#sub-commands">4.3. Sub-commands</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/character-encoding.html">6. Character encoding</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/character-encoding.html#good-reads">6.1. Good reads</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/character-encoding.html#definitions">6.2. Definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/character-encoding.html#linux-terminal-and-encoding">6.3. Linux terminal and encoding</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/character-encoding.html#posix-locale-environement-variables">6.3.1. POSIX locale environement variables</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/character-encoding.html#linux-terminal">6.3.2. Linux terminal</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/character-encoding.html#linux-commands">6.3.3. Linux commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/query.html">5. Search query model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/query.html#definitions">5.1. Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/query.html#syntax">5.2. Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/query.html#list-of-selectors">5.3. List of selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/query.html#search-sort-requirements">5.4. Search sort requirements</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pages/character-encoding.html#program-encoding-strategy">6.4. Program encoding strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/user.html">6. User model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/user.html#authentication">6.1. Authentication</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/user.html#reputation">6.2. Reputation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/design-faq.html">7. Design FAQ</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/design-faq.html#why-aren-t-there-more-shell-grammars-planned-for-support">7.1. Why aren’t there more shell grammars planned for support ?</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/design-faq.html#why-are-command-snippets-limited-to-us-ascii-encoding">7.2. Why are command snippets limited to US-ASCII encoding ?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/manparse.html">7. Manparse</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/manparse.html#cli-overview">7.1. CLI overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#synopsis">7.1.1. Synopsis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#options">7.1.2. Options</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/manparse.html">8. Manparse</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/manparse.html#cli-overview">8.1. CLI overview</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#synopsis">8.1.1. Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#options">8.1.2. Options</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pages/manparse.html#implementation-details">8.2. Implementation details</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#synopsis-docbook-extraction">8.2.1. Synopsis docbook extraction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#option-docbook-extraction">8.2.2. Option docbook extraction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#sub-commands-docbook-extraction">8.2.3. Sub-commands docbook extraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/manparse.html#implementation-details">7.2. Implementation details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#parse-scenario">7.2.1. Parse scenario</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#synopsis-docbook-extraction">7.2.2. Synopsis docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#option-docbook-extraction">7.2.3. Option docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#sub-commands-docbook-extraction">7.2.4. Sub-commands docbook extraction</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/appendix/bash-grammar.html">9. Bash V2 grammar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/appendix/grammar-commons.html">10. Shared definitions for ABNF grammars</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/appendix/grammar-commons.html#ascii">10.1. ASCII</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/appendix/grammar-commons.html#utf-8">10.2. UTF-8</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/appendix/grammar-commons.html#special-characters">10.3. Special characters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/character-encoding.html">8. Character encoding</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/character-encoding.html#good-reads">8.1. Good reads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/character-encoding.html#linux-terminal-and-encoding">8.2. Linux terminal and encoding</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/character-encoding.html#posix-locale-environement-variables">8.2.1. POSIX locale environement variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/character-encoding.html#linux-terminal">8.2.2. Linux terminal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/character-encoding.html#linux-commands">8.2.3. Linux commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pages/character-encoding.html#program-encoding-strategy">8.3. Program encoding strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pages/design-faq.html">9. Design FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/design-faq.html#why-aren-t-there-more-shell-grammars-planned-for-support">9.1. Why aren’t there more shell grammars planned for support ?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/design-faq.html#why-are-command-snippets-limited-to-us-ascii-encoding">9.2. Why are command snippets limited to US-ASCII encoding ?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pages/glossary.html">10. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/appendix/bash-grammar.html">11. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/appendix/grammar-commons.html">12. Shared definitions for ABNF grammars</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/appendix/grammar-commons.html#ascii">12.1. ASCII</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/appendix/grammar-commons.html#utf-8">12.2. UTF-8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/appendix/grammar-commons.html#special-characters">12.3. Special characters</a></li>
 </ul>
 </li>
 </ul>
@@ -317,7 +329,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1-draft.4',
+            VERSION:'0.0.1-draft.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

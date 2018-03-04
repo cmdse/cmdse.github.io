@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>4. Search query model &mdash; cmdse 0.0.1-draft.4 documentation</title>
+  <title>5. Search query model &mdash; cmdse 0.0.1-draft.5 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="cmdse 0.0.1-draft.4 documentation" href="../../index.html"/>
-        <link rel="next" title="5. User model" href="user.html"/>
-        <link rel="prev" title="3. Call expressions parsing" href="call-expression-parsing.html"/> 
+    <link rel="top" title="cmdse 0.0.1-draft.5 documentation" href="../../index.html"/>
+        <link rel="next" title="6. User model" href="user.html"/>
+        <link rel="prev" title="4. Program Interface Model" href="pim.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -60,7 +60,7 @@
 
           
             
-            <img src="../../_static/cmdse.ico.svg" class="logo" />
+            <img src="../../_static/cmdse.svg" class="logo" />
           
           </a>
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.1-draft.4
+                0.0.1-draft.5
               </div>
             
           
@@ -94,19 +94,21 @@
 <li class="toctree-l1"><a class="reference internal" href="../cli.html">1. Command Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="command-snippet.html">2. Command snippet model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="call-expression-parsing.html">3. Call expressions parsing</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Search query model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#definitions">4.1. Definitions</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#syntax">4.2. Syntax</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#list-of-selectors">4.3. List of selectors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#search-sort-requirements">4.4. Search sort requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pim.html">4. Program Interface Model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. Search query model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#definitions">5.1. Definitions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#syntax">5.2. Syntax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#list-of-selectors">5.3. List of selectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#search-sort-requirements">5.4. Search sort requirements</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="user.html">5. User model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../character-encoding.html">6. Character encoding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../design-faq.html">7. Design FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../manparse.html">8. Manparse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/bash-grammar.html">9. Bash V2 grammar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../appendix/grammar-commons.html">10. Shared definitions for ABNF grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">6. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manparse.html">7. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../character-encoding.html">8. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design-faq.html">9. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">10. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash-grammar.html">11. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/grammar-commons.html">12. Shared definitions for ABNF grammars</a></li>
 </ul>
 
             
@@ -137,7 +139,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../../index.html">Docs</a> &raquo;</li>
       
-    <li>4. Search query model</li>
+    <li>5. Search query model</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -152,12 +154,12 @@
            <div itemprop="articleBody">
             
   <div class="section" id="search-query-model">
-<h1>4. Search query model<a class="headerlink" href="#search-query-model" title="Permalink to this headline">¶</a></h1>
+<h1>5. Search query model<a class="headerlink" href="#search-query-model" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="definitions">
-<h2>4.1. Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
+<h2>5.1. Definitions<a class="headerlink" href="#definitions" title="Permalink to this headline">¶</a></h2>
 <dl class="glossary docutils">
 <dt id="term-program-query-selector">program query selector</dt>
-<dd>The empty <a class="reference internal" href="#term-query-selector"><span class="xref std std-term">query selector</span></a> which only selects <a class="reference internal" href="command-snippet.html#term-command-snippet"><span class="xref std std-term">command snippets</span></a> that call the program name given as query selector value.
+<dd>The empty <a class="reference internal" href="#term-query-selector"><span class="xref std std-term">query selector</span></a> which only selects <a class="reference internal" href="../glossary.html#term-command-snippet"><span class="xref std std-term">command snippets</span></a> that call the program name given as query selector value.
 For example, <code class="docutils literal"><span class="pre">:dd</span></code> will restrict the selection to snippets containing reference to the <code class="docutils literal"><span class="pre">dd</span></code> program.</dd>
 <dt id="term-query-literal">query literal</dt>
 <dd>The query answer will try to match any one of those provided literals.
@@ -173,10 +175,10 @@ When the operator is omitted, the <a class="reference internal" href="#term-prog
 </dl>
 </div>
 <div class="section" id="syntax">
-<h2>4.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<h2>5.2. Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The program internal string representations are in <a class="reference internal" href="../character-encoding.html#term-utf-8"><span class="xref std std-term">utf-8</span></a> and I/O operation will be transcoded to the environement encoding.
+<p class="last">The program internal string representations are in <a class="reference internal" href="../glossary.html#term-utf-8"><span class="xref std std-term">utf-8</span></a> and I/O operation will be transcoded to the environement encoding.
 See <a class="reference internal" href="../character-encoding.html"><span class="doc">Character encoding</span></a>.</p>
 </div>
 <div class="admonition note">
@@ -188,7 +190,7 @@ See <a class="reference internal" href="../character-encoding.html"><span class=
 <p class="last">See the <a class="reference internal" href="../appendix/grammar-commons.html"><span class="doc">Shared definitions for ABNF grammars</span></a> section for the depending token definitions.</p>
 </div>
 <div class="literal-block-wrapper docutils container" id="id1">
-<div class="code-block-caption"><span class="caption-number">Listing 4.1 </span><span class="caption-text">Query formal <span class="target" id="index-0"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7405.html"><strong>ABNF</strong></a> syntax definition</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
+<div class="code-block-caption"><span class="caption-number">Listing 5.1 </span><span class="caption-text">Query formal <span class="target" id="index-0"></span><a class="rfc reference external" href="https://tools.ietf.org/html/rfc7405.html"><strong>ABNF</strong></a> syntax definition</span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-abnf"><div class="highlight"><pre><span></span><span class="nc">SELECTOR-CHAR</span>            <span class="o">=</span> <span class="k">ALPHA</span> <span class="o">/</span> <span class="k">DIGIT</span> <span class="o">/</span> <span class="nc">HYPHEN</span> <span class="o">/</span> <span class="nc">UNDERSCORE</span>
                          <span class="c1">; ASCII alphanum character or hyphen or underscore</span>
 <span class="nc">LITERAL-CHAR</span>             <span class="o">=</span> <span class="nc">UTF8-2</span> <span class="o">/</span> <span class="nc">UTF8-3</span> <span class="o">/</span> <span class="nc">UTF8-4</span> <span class="o">/</span> <span class="k">ALPHA</span> <span class="o">/</span> <span class="k">DIGIT</span> <span class="o">/</span> <span class="nc">HYPHEN</span> <span class="o">/</span> <span class="nc">UNDERSCORE</span>
@@ -208,11 +210,11 @@ See <a class="reference internal" href="../character-encoding.html"><span class=
 </div>
 </div>
 <div class="section" id="list-of-selectors">
-<h2>4.3. List of selectors<a class="headerlink" href="#list-of-selectors" title="Permalink to this headline">¶</a></h2>
+<h2>5.3. List of selectors<a class="headerlink" href="#list-of-selectors" title="Permalink to this headline">¶</a></h2>
 <p><cite>to be written</cite></p>
 </div>
 <div class="section" id="search-sort-requirements">
-<h2>4.4. Search sort requirements<a class="headerlink" href="#search-sort-requirements" title="Permalink to this headline">¶</a></h2>
+<h2>5.4. Search sort requirements<a class="headerlink" href="#search-sort-requirements" title="Permalink to this headline">¶</a></h2>
 <div class="admonition-requirement admonition" id="requirement-result-by-relevance">
 <p class="first admonition-title">Result By Relevance</p>
 <p class="last">Results should be sorted by relevance.</p>
@@ -236,10 +238,10 @@ See <a class="reference internal" href="../character-encoding.html"><span class=
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="user.html" class="btn btn-neutral float-right" title="5. User model" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="user.html" class="btn btn-neutral float-right" title="6. User model" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="call-expression-parsing.html" class="btn btn-neutral" title="3. Call expressions parsing" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="pim.html" class="btn btn-neutral" title="4. Program Interface Model" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -270,7 +272,7 @@ See <a class="reference internal" href="../character-encoding.html"><span class=
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.1-draft.4',
+            VERSION:'0.0.1-draft.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

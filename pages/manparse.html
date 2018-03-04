@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>8. Manparse &mdash; cmdse 0.0.1-draft.4 documentation</title>
+  <title>7. Manparse &mdash; cmdse 0.0.1-draft.5 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="cmdse 0.0.1-draft.4 documentation" href="../index.html"/>
-        <link rel="next" title="9. Bash V2 grammar" href="appendix/bash-grammar.html"/>
-        <link rel="prev" title="7. Design FAQ" href="design-faq.html"/> 
+    <link rel="top" title="cmdse 0.0.1-draft.5 documentation" href="../index.html"/>
+        <link rel="next" title="8. Character encoding" href="character-encoding.html"/>
+        <link rel="prev" title="6. User model" href="model/user.html"/> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -60,7 +60,7 @@
 
           
             
-            <img src="../_static/cmdse.ico.svg" class="logo" />
+            <img src="../_static/cmdse.svg" class="logo" />
           
           </a>
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.1-draft.4
+                0.0.1-draft.5
               </div>
             
           
@@ -94,26 +94,35 @@
 <li class="toctree-l1"><a class="reference internal" href="cli.html">1. Command Line Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model/command-snippet.html">2. Command snippet model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model/call-expression-parsing.html">3. Call expressions parsing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model/query.html">4. Search query model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model/user.html">5. User model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="character-encoding.html">6. Character encoding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design-faq.html">7. Design FAQ</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Manparse</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cli-overview">8.1. CLI overview</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#synopsis">8.1.1. Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#options">8.1.2. Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/pim.html">4. Program Interface Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/query.html">5. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/user.html">6. User model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. Manparse</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cli-overview">7.1. CLI overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#synopsis">7.1.1. Synopsis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#options">7.1.2. Options</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#implementation-details">8.2. Implementation details</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#synopsis-docbook-extraction">8.2.1. Synopsis docbook extraction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#option-docbook-extraction">8.2.2. Option docbook extraction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#sub-commands-docbook-extraction">8.2.3. Sub-commands docbook extraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation-details">7.2. Implementation details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parse-scenario">7.2.1. Parse scenario</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#canonical-parse-scenario">7.2.1.1. Canonical parse scenario:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embedded-sub-command-parse-scenario">7.2.1.2. Embedded sub-command parse scenario:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#external-sub-command-parse-scenario">7.2.1.3. External sub-command parse scenario:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multiple-options-sections-parse-scenario">7.2.1.4. Multiple OPTIONS sections parse scenario:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#synopsis-docbook-extraction">7.2.2. Synopsis docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#option-docbook-extraction">7.2.3. Option docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sub-commands-docbook-extraction">7.2.4. Sub-commands docbook extraction</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/bash-grammar.html">9. Bash V2 grammar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/grammar-commons.html">10. Shared definitions for ABNF grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character-encoding.html">8. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design-faq.html">9. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">10. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/bash-grammar.html">11. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/grammar-commons.html">12. Shared definitions for ABNF grammars</a></li>
 </ul>
 
             
@@ -144,7 +153,7 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../index.html">Docs</a> &raquo;</li>
       
-    <li>8. Manparse</li>
+    <li>7. Manparse</li>
       <li class="wy-breadcrumbs-aside">
         
           
@@ -159,37 +168,105 @@
            <div itemprop="articleBody">
             
   <div class="section" id="manparse">
-<h1>8. Manparse<a class="headerlink" href="#manparse" title="Permalink to this headline">¶</a></h1>
+<h1>7. Manparse<a class="headerlink" href="#manparse" title="Permalink to this headline">¶</a></h1>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The project is developped at <a class="reference external" href="https://github.com/cmdse/manparse">github.com/cmdse/manparse</a></p>
 </div>
-<p><code class="docutils literal"><span class="pre">manparse</span></code> is a tool to extract a <a class="reference internal" href="model/command-snippet.html#term-program-interface-model"><span class="xref std std-term">program interface model</span></a> from man-pages.
+<p><code class="docutils literal"><span class="pre">manparse</span></code> is a tool to extract a <a class="reference internal" href="glossary.html#term-program-interface-model"><span class="xref std std-term">program interface model</span></a> from man-pages.
 It uses <a class="reference external" href="https://gitlab.com/esr/doclifter">doclifter</a> from Eric S. Raymond which converts man pages to <a class="reference external" href="http://docbook.org">DocBook</a> xml files.
 Those files already hold a good level of semantics, and <code class="docutils literal"><span class="pre">manparse</span></code> will do its best to grab as much information as possible.
-The <a class="reference internal" href="model/command-snippet.html#term-program-interface-model"><span class="xref std std-term">program interface model</span></a> should be serialized to be consumed by other tools.
+The <a class="reference internal" href="glossary.html#term-program-interface-model"><span class="xref std std-term">program interface model</span></a> should be serialized to be consumed by other tools.
 Serialization format has not yet been chosen but it will likely be JSON + <a class="reference external" href="http://json-schema.org/">JSON Schema</a>.</p>
 <div class="section" id="cli-overview">
-<h2>8.1. CLI overview<a class="headerlink" href="#cli-overview" title="Permalink to this headline">¶</a></h2>
+<h2>7.1. CLI overview<a class="headerlink" href="#cli-overview" title="Permalink to this headline">¶</a></h2>
 <p><cite>to be written</cite></p>
 <div class="section" id="synopsis">
-<h3>8.1.1. Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h3>
+<h3>7.1.1. Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="options">
-<h3>8.1.2. Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h3>
+<h3>7.1.2. Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h3>
+<dl class="option">
+<dt id="cmdoption-manparse-v">
+<code class="descname">-v</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--verbose</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-manparse-v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blah</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-manparse-x">
+<code class="descname">-x</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--silent</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-manparse-x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shhhht</p>
+</dd></dl>
+
 </div>
 </div>
 <div class="section" id="implementation-details">
-<h2>8.2. Implementation details<a class="headerlink" href="#implementation-details" title="Permalink to this headline">¶</a></h2>
-<p><cite>to be written</cite></p>
+<h2>7.2. Implementation details<a class="headerlink" href="#implementation-details" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">manparse</span></code> will pass through multiple steps to build up a <a class="reference internal" href="glossary.html#term-program-interface-model"><span class="xref std std-term">program interface model</span></a> from a manpage:</p>
+<ol class="arabic simple">
+<li>call <code class="docutils literal"><span class="pre">doclifter</span></code> to generate a docbook file in a temporary folder;</li>
+<li>unmarshall the docbook xml file;</li>
+<li>flatten subsections to raw text;</li>
+<li>extract the command synopses in a tree structure;</li>
+<li>run parse scenarios to extract a partial <a class="reference internal" href="glossary.html#term-option-description-model"><span class="xref std std-term">option description model</span></a> and eventually sub-commands;</li>
+<li>match synopses with <a class="reference internal" href="glossary.html#term-option-description-model"><span class="xref std std-term">option description model</span></a>, and when suitable infer a <code class="docutils literal"><span class="pre">POSIX_STACK_SWITCH</span></code> <a class="reference internal" href="glossary.html#term-option-expression-variant"><span class="xref std std-term">option expression variant</span></a>.</li>
+</ol>
+<div class="section" id="parse-scenario">
+<h3>7.2.1. Parse scenario<a class="headerlink" href="#parse-scenario" title="Permalink to this headline">¶</a></h3>
+<p>A parse scenario is an abstraction to leverage the numerous set of situations <code class="docutils literal"><span class="pre">manparse</span></code> can be exposed to.</p>
+<p>Parse scenario execution is triggered when its associated prerequisites are met. Prerequisites are a set of conditions affecting:</p>
+<ul class="simple">
+<li>the available section names;</li>
+<li>the content of those sections;</li>
+<li>the synopses.</li>
+</ul>
+<p>The canonical parse scenario or default parse scenario is the fallback scenario and should match a good half of encountered manpages.
+Multiple parse scenarios can be matched at the same time and should be executed one after the other.
+As you can see in the bellow subsections, many scenarios share some conditions.</p>
+<div class="section" id="canonical-parse-scenario">
+<h4>7.2.1.1. Canonical parse scenario:<a class="headerlink" href="#canonical-parse-scenario" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>[condition 1] a section named “OPTIONS” is found;</li>
+<li>[condition 2] no section named “COMMANDS” is found;</li>
+<li>[condition 3] the “OPTIONS” section matches the structure of option synopses list.</li>
+</ul>
+</div>
+<div class="section" id="embedded-sub-command-parse-scenario">
+<h4>7.2.1.2. Embedded sub-command parse scenario:<a class="headerlink" href="#embedded-sub-command-parse-scenario" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>[condition 1] a section named “OPTIONS” is found;</li>
+<li>[condition 2] a section named “COMMANDS” is found;</li>
+<li>[condition 3] the “OPTIONS” section matches the structure of option synopses list;</li>
+<li>[condition 4] the “COMMANDS” section matches the structure of command synopses;</li>
+<li>[condition 5] command synopses reference a COMMAND parameter.</li>
+</ul>
+</div>
+<div class="section" id="external-sub-command-parse-scenario">
+<h4>7.2.1.3. External sub-command parse scenario:<a class="headerlink" href="#external-sub-command-parse-scenario" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>[condition 1] a section named “OPTIONS” is found;</li>
+<li>[condition 2] a section named “COMMANDS” is found;</li>
+<li>[condition 3] the “OPTIONS” section matches the structure of option synopses list;</li>
+<li>[condition 4] the “COMMANDS” section contains a list of one-word entries with description, and each description contains a reference to an external manpage;</li>
+<li>[condition 5] command synopses reference a COMMAND parameter.</li>
+</ul>
+</div>
+<div class="section" id="multiple-options-sections-parse-scenario">
+<h4>7.2.1.4. Multiple OPTIONS sections parse scenario:<a class="headerlink" href="#multiple-options-sections-parse-scenario" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>[condition 1] multiple section containing “OPTIONS” are found;</li>
+<li>[condition 2] each of those “OPTIONS” sections matches the structure of option synopses list.</li>
+</ul>
+</div>
+</div>
 <div class="section" id="synopsis-docbook-extraction">
-<h3>8.2.1. Synopsis docbook extraction<a class="headerlink" href="#synopsis-docbook-extraction" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.2. Synopsis docbook extraction<a class="headerlink" href="#synopsis-docbook-extraction" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="option-docbook-extraction">
-<h3>8.2.2. Option docbook extraction<a class="headerlink" href="#option-docbook-extraction" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.3. Option docbook extraction<a class="headerlink" href="#option-docbook-extraction" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="sub-commands-docbook-extraction">
-<h3>8.2.3. Sub-commands docbook extraction<a class="headerlink" href="#sub-commands-docbook-extraction" title="Permalink to this headline">¶</a></h3>
+<h3>7.2.4. Sub-commands docbook extraction<a class="headerlink" href="#sub-commands-docbook-extraction" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 </div>
@@ -201,10 +278,10 @@ Serialization format has not yet been chosen but it will likely be JSON + <a cla
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="appendix/bash-grammar.html" class="btn btn-neutral float-right" title="9. Bash V2 grammar" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="character-encoding.html" class="btn btn-neutral float-right" title="8. Character encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="design-faq.html" class="btn btn-neutral" title="7. Design FAQ" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="model/user.html" class="btn btn-neutral" title="6. User model" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -235,7 +312,7 @@ Serialization format has not yet been chosen but it will likely be JSON + <a cla
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.1-draft.4',
+            VERSION:'0.0.1-draft.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

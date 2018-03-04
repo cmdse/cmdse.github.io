@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. Program Interface Model &mdash; cmdse 0.0.1-draft.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="cmdse 0.0.1-draft.5 documentation" href="../../index.html"/>
+        <link rel="next" title="5. Search query model" href="query.html"/>
+        <link rel="prev" title="3. Call expressions parsing" href="call-expression-parsing.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> cmdse
+          
+
+          
+            
+            <img src="../../_static/cmdse.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1-draft.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../cli.html">1. Command Line Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="command-snippet.html">2. Command snippet model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="call-expression-parsing.html">3. Call expressions parsing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. Program Interface Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#synopses">4.1. Synopses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#posix-1-2008-strict-rules">4.1.1. POSIX.1-2008 Strict Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#posix-1-2008-guidance-rules">4.1.2. POSIX.1-2008 Guidance Rules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#option-description-model">4.2. Option Description Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sub-commands">4.3. Sub-commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="query.html">5. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">6. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manparse.html">7. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../character-encoding.html">8. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design-faq.html">9. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">10. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash-grammar.html">11. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/grammar-commons.html">12. Shared definitions for ABNF grammars</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">cmdse</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+    <li>4. Program Interface Model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/pages/model/pim.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-interface-model">
+<h1>4. Program Interface Model<a class="headerlink" href="#program-interface-model" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="synopses">
+<h2>4.1. Synopses<a class="headerlink" href="#synopses" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="posix-1-2008-strict-rules">
+<h3>4.1.1. POSIX.1-2008 Strict Rules<a class="headerlink" href="#posix-1-2008-strict-rules" title="Permalink to this headline">¶</a></h3>
+<p>POSIX.1-2008 reference<a class="footnote-reference" href="#posix-synopsis" id="id1">[1]</a> defines strictly the syntax of a utility (or command) synopsis:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><strong>utility_name[</strong>-a<strong>][</strong>-b<strong>][</strong>-c option_argument<strong>]</strong></dt>
+<dd><strong>[</strong>-d<strong>|</strong>-e<strong>][</strong>-f<strong>[</strong>option_argument<strong>]][</strong>operand<strong>…]</strong></dd>
+</dl>
+</div></blockquote>
+<p><strong>The following syntax rules are non-exhaustive but give a quick overview of the standard:</strong></p>
+<ul>
+<li><p class="first">Options are denoted with hyphen <code class="docutils literal"><span class="pre">-</span></code> prefixes and separated by blank characters.</p>
+</li>
+<li><p class="first">Optional words are enclosed between square braquets <code class="docutils literal"><span class="pre">[]</span></code>.</p>
+</li>
+<li><p class="first">Exclusive expressions are denoted with the pipe <code class="docutils literal"><span class="pre">|</span></code> character.</p>
+</li>
+<li><p class="first">Alternatively, mutually-exclusive options and operands may be listed with multiple synopsis lines. For example:</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><strong>utility_name -d[</strong>-a<strong>][</strong>-c option_argument<strong>][</strong>operand<strong>…]</strong></div>
+<div class="line"><strong>utility_name[</strong>-a<strong>][</strong>-b<strong>][</strong>operand<strong>…]</strong></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Repeatable expressions are followed up by ellipsis <code class="docutils literal"><span class="pre">…</span></code> or three dots character.</p>
+</li>
+<li><p class="first">Names that require substitution could be enclosed in angle-braquets <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> or embedded with underscore <code class="docutils literal"><span class="pre">_</span></code> characters (non-mandatory).</p>
+</li>
+<li><p class="first">Utilities with many flags generally show all of the individual flags (that do not take option-arguments) grouped, as in:</p>
+<blockquote>
+<div><p><strong>utility_name</strong> <strong>[</strong>-abcDxyz<strong>][</strong>-p arg<strong>][</strong>operand<strong>]</strong></p>
+</div></blockquote>
+</li>
+<li><p class="first">Utilities with very complex arguments may be shown as follows:</p>
+<blockquote>
+<div><p><strong>utility_name [</strong>options<strong>][</strong>operands<strong>]</strong></p>
+</div></blockquote>
+</li>
+<li><p class="first">Unless otherwise specified, whenever an operand or option-argument is, or contains, a numeric value, the number is interpreted as a decimal integer.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="posix-1-2008-guidance-rules">
+<h3>4.1.2. POSIX.1-2008 Guidance Rules<a class="headerlink" href="#posix-1-2008-guidance-rules" title="Permalink to this headline">¶</a></h3>
+<p>POSIX.1-2008 reference<a class="footnote-reference" href="#posix-synopsis" id="id2">[1]</a> defines guidance rules which shall be implemented.</p>
+<p><strong>Guidelines are provided as non-mandatory, but many are implemented in Unix system utilities. This list is non-exhaustive, but reatains rules which might affect the cmdse project:</strong></p>
+<ul class="simple">
+<li><strong>G1, 2</strong> Utility names should be between two and nine characters, inclusive, and should include lowercase letters (the lower character classification) and digits only from the portable character set.</li>
+<li><strong>G3</strong> Each option name should be a single alphanumeric character (the <strong>alnum</strong> character classification) from the portable character set. Multi-digit options should not be allowed.</li>
+<li><strong>G4</strong> All options should be preceded by the ‘-‘ delimiter character.</li>
+<li><strong>G5</strong> One or more options without option-arguments, followed by at most one option that takes an option-argument, should be accepted when grouped behind one <code class="docutils literal"><span class="pre">-</span></code> delimiter.</li>
+<li><strong>G6</strong> Each option and option-argument should be a separate argument, except as noted in Utility Argument Syntax, item (2).</li>
+<li><strong>G8</strong> When multiple option-arguments are specified to follow a single option, they should be presented as a single argument, using comma <code class="docutils literal"><span class="pre">,</span></code> characters within that argument or blank characters within that argument to separate them.</li>
+<li><strong>G9</strong> All options should precede operands on the command line.</li>
+<li><strong>G10</strong> The first <code class="docutils literal"><span class="pre">--</span></code> argument that is not an option-argument should be accepted as a delimiter indicating the end of options. Any following arguments should be treated as operands, even if they begin with the <code class="docutils literal"><span class="pre">-</span></code> character.</li>
+<li><strong>G11</strong> The order of different options relative to one another should not matter, unless the options are documented as mutually-exclusive.</li>
+<li><strong>G12</strong> The order of operands may matter and position-related interpretations should be determined on a utility-specific basis.</li>
+<li><strong>G13</strong> For utilities that use operands to represent files to be opened for either reading or writing, the <code class="docutils literal"><span class="pre">-</span></code> operand should be used to mean only standard input (or standard output when it is clear from context that an output file is being specified) or a file named ‘-‘.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="option-description-model">
+<h2>4.2. Option Description Model<a class="headerlink" href="#option-description-model" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="sub-commands">
+<h2>4.3. Sub-commands<a class="headerlink" href="#sub-commands" title="Permalink to this headline">¶</a></h2>
+<p><em>to be writen</em></p>
+<hr class="docutils" />
+<div class="footnotes docutils container">
+<table class="docutils footnote" frame="void" id="posix-synopsis" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> See <a class="reference external" href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html">POSIX.1-2008, sec. 12.1</a>, “Utility Conventions”</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="query.html" class="btn btn-neutral float-right" title="5. Search query model" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="call-expression-parsing.html" class="btn btn-neutral" title="3. Call expressions parsing" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jules Randolph.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.0.1-draft.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

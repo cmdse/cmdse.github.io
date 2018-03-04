@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>1. Command Line Interface &mdash; cmdse 0.0.1-draft.4 documentation</title>
+  <title>1. Command Line Interface &mdash; cmdse 0.0.1-draft.5 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="cmdse 0.0.1-draft.4 documentation" href="../index.html"/>
+    <link rel="top" title="cmdse 0.0.1-draft.5 documentation" href="../index.html"/>
         <link rel="next" title="2. Command snippet model" href="model/command-snippet.html"/>
         <link rel="prev" title="Specifications for cmdse: the search engine of bash commands" href="../index.html"/> 
 
@@ -60,7 +60,7 @@
 
           
             
-            <img src="../_static/cmdse.ico.svg" class="logo" />
+            <img src="../_static/cmdse.svg" class="logo" />
           
           </a>
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.1-draft.4
+                0.0.1-draft.5
               </div>
             
           
@@ -104,13 +104,15 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="model/command-snippet.html">2. Command snippet model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model/call-expression-parsing.html">3. Call expressions parsing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model/query.html">4. Search query model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model/user.html">5. User model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="character-encoding.html">6. Character encoding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design-faq.html">7. Design FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="manparse.html">8. Manparse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/bash-grammar.html">9. Bash V2 grammar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="appendix/grammar-commons.html">10. Shared definitions for ABNF grammars</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/pim.html">4. Program Interface Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/query.html">5. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/user.html">6. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manparse.html">7. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="character-encoding.html">8. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design-faq.html">9. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">10. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/bash-grammar.html">11. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/grammar-commons.html">12. Shared definitions for ABNF grammars</a></li>
 </ul>
 
             
@@ -164,11 +166,11 @@
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ cmdse <span class="o">[</span>-i <span class="p">|</span> -c <span class="p">|</span> -x<span class="o">]</span> &lt;QUERY&gt;...
 </pre></div>
 </div>
-<p>The default behaviour of <strong class="program">cmdse</strong> is to process <code class="docutils literal"><span class="pre">&lt;QUERY&gt;...</span></code> operands and print the best-matched <a class="reference internal" href="model/command-snippet.html#term-command-snippet"><span class="xref std std-term">command snippets</span></a>.</p>
+<p>The default behaviour of <strong class="program">cmdse</strong> is to process <code class="docutils literal"><span class="pre">&lt;QUERY&gt;...</span></code> operands and print the best-matched <a class="reference internal" href="glossary.html#term-command-snippet"><span class="xref std std-term">command snippets</span></a>.</p>
 </div>
 <div class="section" id="query-operands">
 <h3>1.1.2. QUERY operands<a class="headerlink" href="#query-operands" title="Permalink to this headline">¶</a></h3>
-<p>A QUERY operand is a <a class="reference internal" href="model/command-snippet.html#term-word"><span class="xref std std-term">word</span></a> witch is evaluated either as a <a class="reference internal" href="model/query.html#term-query-selector"><span class="xref std std-term">query selectors</span></a> or a <a class="reference internal" href="model/query.html#term-query-literal"><span class="xref std std-term">query literals</span></a>.</p>
+<p>A QUERY operand is a <a class="reference internal" href="glossary.html#term-word"><span class="xref std std-term">word</span></a> witch is evaluated either as a <a class="reference internal" href="model/query.html#term-query-selector"><span class="xref std std-term">query selectors</span></a> or a <a class="reference internal" href="model/query.html#term-query-literal"><span class="xref std std-term">query literals</span></a>.</p>
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-number">Listing 1.1 </span><span class="caption-text">Example with a <a class="reference internal" href="model/query.html#term-program-query-selector"><span class="xref std std-term">program query selector</span></a> and two <a class="reference internal" href="model/query.html#term-query-literal"><span class="xref std std-term">query literals</span></a></span><a class="headerlink" href="#id1" title="Permalink to this code">¶</a></div>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>$ cmdse :tar extract files
@@ -193,8 +195,8 @@
 <dl class="option">
 <dt id="cmdoption-cmdse-x">
 <code class="descname">-x</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--execute-first</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-cmdse-x" title="Permalink to this definition">¶</a></dt>
-<dd><p>Launch interactive mode and prompt the user if he wants to e<strong>x</strong>ecute the first <a class="reference internal" href="model/command-snippet.html#term-command-snippet"><span class="xref std std-term">command snippet</span></a> found with the joint query.
-For any <a class="reference internal" href="model/command-snippet.html#term-command-parameter"><span class="xref std std-term">command parameter</span></a>, the user will be prompt to provide an input.</p>
+<dd><p>Launch interactive mode and prompt the user if he wants to e<strong>x</strong>ecute the first <a class="reference internal" href="glossary.html#term-command-snippet"><span class="xref std std-term">command snippet</span></a> found with the joint query.
+For any <a class="reference internal" href="glossary.html#term-command-parameter"><span class="xref std std-term">command parameter</span></a>, the user will be prompt to provide an input.</p>
 </dd></dl>
 
 </div>
@@ -301,7 +303,7 @@ docker rm <span class="k">$(</span>docker ps -a -q<span class="k">)</span>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.1-draft.4',
+            VERSION:'0.0.1-draft.5',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
