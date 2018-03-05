@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>10. Glossary &mdash; cmdse 0.0.2-draft.1 documentation</title>
+  <title>10. Glossary &mdash; cmdse 0.0.2-draft.2 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="cmdse 0.0.2-draft.1 documentation" href="../index.html"/>
+    <link rel="top" title="cmdse 0.0.2-draft.2 documentation" href="../index.html"/>
         <link rel="next" title="11. Bash V2 grammar" href="appendix/bash-grammar.html"/>
         <link rel="prev" title="9. Design FAQ" href="design-faq.html"/> 
 
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.2-draft.1
+                0.0.2-draft.2
               </div>
             
           
@@ -165,7 +165,7 @@ For example, pressing <code class="kbd docutils literal"><span class="pre">`</sp
 <dt id="term-command">command</dt>
 <dd>[Unix shells] A command is a one-line processable text chunk<a class="footnote-reference" href="#bash-exceptions" id="id1">[3]</a> to be converted in command invocation. Command invocation consists in passing to the operating system a file to be read and executed (extrapolated from the <a class="reference internal" href="#term-utility-name"><span class="xref std std-term">utility name</span></a>) with a list of arguments (<code class="docutils literal"><span class="pre">argv</span></code>).</dd>
 <dt id="term-command-identifier">command identifier</dt>
-<dd>[Unix shells] A command identifier is a word which maps to a set of instructions, either through a <a class="reference internal" href="#term-builtin-command"><span class="xref std std-term">builtin command</span></a>, a declared function,  or with a <a class="reference internal" href="#term-utility-executable"><span class="xref std std-term">utility executable</span></a>. See the POSIX.1-2008 section on command search and execution<a class="footnote-reference" href="#posix-search-execute" id="id2">[4]</a>.</dd>
+<dd>[Unix shells] A command identifier is a word which maps to a set of instructions, either through a <a class="reference internal" href="#term-builtin-command"><span class="xref std std-term">builtin command</span></a>, a declared function,  or with a <a class="reference internal" href="#term-utility-name"><span class="xref std std-term">utility name</span></a>.</dd>
 <dt id="term-command-parameter">command parameter</dt>
 <dd>[<em>cmdse</em>] A <a class="reference internal" href="#term-command-snippet"><span class="xref std std-term">command snippet</span></a> parameter is a string which should be substituted with user input when the corresponding snippet is invoked.</dd>
 <dt id="term-command-snippet">command snippet</dt>
@@ -196,7 +196,7 @@ When two groups can be matched, the latest is the option parameter of an explici
 <dt id="term-option-expression-variant">option expression variant</dt>
 <dd>[<em>cmdse</em>] A pattern to recognize one or many arguments as members of an option flag or option assignment (see <a class="reference internal" href="model/uim.html#option-expression-variants"><span class="std std-numref">Table 2.1</span></a>).</dd>
 <dt id="term-option-scheme">option scheme</dt>
-<dd>[<em>cmdse</em>] A set of <a class="reference internal" href="#term-option-expression-variant"><span class="xref std std-term">option expression variants</span></a> supported by a program command line interface (see <a class="reference internal" href="model/uim.html#option-expression-variants"><span class="std std-numref">Table 2.1</span></a>).</dd>
+<dd>[<em>cmdse</em>] A set of <a class="reference internal" href="#term-option-expression-variant"><span class="xref std std-term">option expression variants</span></a> supported by a <a class="reference internal" href="#term-utility-name"><span class="xref std std-term">utility</span></a> (see <a class="reference internal" href="model/uim.html#option-expression-variants"><span class="std std-numref">Table 2.1</span></a>).</dd>
 <dt id="term-rune">rune<dt id="term-code-point">code point</dt>
 <dd>A representation in the form of character of a unicode byte sequence.
 Rune is the Go synonym for a code point.</dd>
@@ -213,7 +213,7 @@ Rune is the Go synonym for a code point.</dd>
 <dt id="term-utf-8">utf-8</dt>
 <dd>An <a class="reference internal" href="#term-encoding"><span class="xref std std-term">encoding</span></a> for the <a class="linuxman-url reference external" href="http://linux.die.net/man/7/unicode"><em>unicode(7)</em></a> <a class="reference internal" href="#term-charset"><span class="xref std std-term">charset</span></a>. See <a class="linuxman-url reference external" href="http://linux.die.net/man/7/utf-8"><em>utf-8(7)</em></a>.</dd>
 <dt id="term-utility-executable">utility executable</dt>
-<dd>[Unix shells] An executable file which supports positional text arguments.</dd>
+<dd>[Unix shells] An executable file which supports positional text arguments. See the POSIX.1-2008 section on utility search and execution<a class="footnote-reference" href="#posix-search-execute" id="id2">[4]</a>.</dd>
 <dt id="term-utility-interface-model">utility interface model</dt>
 <dd><p class="first">[<em>cmdse</em>] Structured data describing the command line interface capabilities of a <a class="reference internal" href="#term-utility-executable"><span class="xref std std-term">utility executable</span></a> identified by its <a class="reference internal" href="#term-utility-name"><span class="xref std std-term">utility name</span></a>. The capabilities are defined through:</p>
 <blockquote class="last">
@@ -304,7 +304,7 @@ The term “utility” is directly borrowed from the POSIX.1-2008 reference<a cl
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.2-draft.1',
+            VERSION:'0.0.2-draft.2',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
