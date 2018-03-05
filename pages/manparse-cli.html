@@ -1,0 +1,386 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>7. Manparse CLI &mdash; cmdse 0.0.2-draft.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="cmdse 0.0.2-draft.1 documentation" href="../index.html"/>
+        <link rel="next" title="8. Character encoding" href="character-encoding.html"/>
+        <link rel="prev" title="6. User model" href="model/user.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> cmdse
+          
+
+          
+            
+            <img src="../_static/cmdse.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2-draft.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="cmdse-cli.html">1. Cmdse CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/uim.html">2. Utility Interface Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/command-snippet.html">3. Command snippet model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/call-expression-parsing.html">4. Call expressions parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/query.html">5. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="model/user.html">6. User model</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7. Manparse CLI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#synopsis">7.1. Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#options">7.2. Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation-details">7.3. Implementation details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parse-scenario">7.3.1. Parse scenario</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#canonical-parse-scenario">7.3.1.1. Canonical parse scenario:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#embedded-sub-command-parse-scenario">7.3.1.2. Embedded sub-command parse scenario:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#external-sub-command-parse-scenario">7.3.1.3. External sub-command parse scenario:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multiple-options-sections-parse-scenario">7.3.1.4. Multiple OPTIONS sections parse scenario:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#synopsis-docbook-extraction">7.3.2. Synopsis docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#option-docbook-extraction">7.3.3. Option docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sub-commands-docbook-extraction">7.3.4. Sub-commands docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-extraction-failures">7.3.5. Model Extraction Failures</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="character-encoding.html">8. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design-faq.html">9. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="glossary.html">10. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/bash-grammar.html">11. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix/grammar-commons.html">12. Shared definitions for ABNF grammars</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">cmdse</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>7. Manparse CLI</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/pages/manparse-cli.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="manparse-cli">
+<span id="manparse-cli-section"></span><h1>7. Manparse CLI<a class="headerlink" href="#manparse-cli" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The project is developped at <a class="reference external" href="https://github.com/cmdse/manparse">github.com/cmdse/manparse</a></p>
+</div>
+<p><strong class="command">manparse</strong> is a tool to extract a <a class="reference internal" href="glossary.html#term-utility-interface-model"><span class="xref std std-term">utility interface model</span></a> from man-pages.
+It uses <strong class="command">doclifter</strong> <a class="footnote-reference" href="#doclifter-official" id="id1">[1]</a> from Eric S. Raymond which converts man pages to <a class="reference external" href="http://docbook.org">DocBook</a> xml files.
+Those files already hold a good level of semantics, and <strong class="command">manparse</strong> will do its best to grab as much information as possible.
+The <a class="reference internal" href="glossary.html#term-utility-interface-model"><span class="xref std std-term">utility interface model</span></a> should be serialized to be consumed by other tools.
+Serialization format has not yet been chosen but it will likely be JSON + <a class="reference external" href="http://json-schema.org/">JSON Schema</a>.</p>
+<div class="section" id="synopsis">
+<h2>7.1. Synopsis<a class="headerlink" href="#synopsis" title="Permalink to this headline">¶</a></h2>
+<div class="synopsis big docutils container">
+manparse [-v|-q] files…</div>
+</div>
+<div class="section" id="options">
+<h2>7.2. Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<dl class="option">
+<dt id="cmdoption-manparse-v">
+<code class="descname">-v</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--verbose</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-manparse-v" title="Permalink to this definition">¶</a></dt>
+<dd><p>Blah</p>
+</dd></dl>
+
+<dl class="option">
+<dt id="cmdoption-manparse-q">
+<code class="descname">-q</code><code class="descclassname"></code><code class="descclassname">, </code><code class="descname">--quiet</code><code class="descclassname"></code><a class="headerlink" href="#cmdoption-manparse-q" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shhhht</p>
+</dd></dl>
+
+</div>
+<div class="section" id="implementation-details">
+<h2>7.3. Implementation details<a class="headerlink" href="#implementation-details" title="Permalink to this headline">¶</a></h2>
+<p><strong class="command">manparse</strong> will pass through multiple steps to build up a <a class="reference internal" href="glossary.html#term-utility-interface-model"><span class="xref std std-term">utility interface model</span></a> from a manpage:</p>
+<ol class="arabic simple">
+<li>call <code class="docutils literal"><span class="pre">doclifter</span></code> to generate a docbook file in a temporary folder;</li>
+<li>unmarshall the docbook xml file;</li>
+<li>flatten subsections to raw text;</li>
+<li>extract the command synopses in a tree structure;</li>
+<li>run parse scenarios to extract a partial <a class="reference internal" href="glossary.html#term-option-description-model"><span class="xref std std-term">option description model</span></a> and eventually <a class="reference internal" href="glossary.html#term-sub-command"><span class="xref std std-term">sub-commands</span></a>;</li>
+<li>match synopses with <a class="reference internal" href="glossary.html#term-option-description-model"><span class="xref std std-term">option description model</span></a>, and when suitable infer a <code class="docutils literal"><span class="pre">POSIX_STACK_SWITCH</span></code> <a class="reference internal" href="glossary.html#term-option-expression-variant"><span class="xref std std-term">option expression variant</span></a>.</li>
+</ol>
+<div class="section" id="parse-scenario">
+<h3>7.3.1. Parse scenario<a class="headerlink" href="#parse-scenario" title="Permalink to this headline">¶</a></h3>
+<p>A parse scenario is an abstraction to leverage the numerous set of situations <strong class="command">manparse</strong> can be exposed to.</p>
+<p>Parse scenario execution is triggered when its associated prerequisites are met. Prerequisites are a set of conditions affecting:</p>
+<ul class="simple">
+<li>the available section names;</li>
+<li>the content of those sections;</li>
+<li>the synopses.</li>
+</ul>
+<p>The canonical parse scenario or default parse scenario is the fallback scenario and should match a good half of encountered manpages.
+Multiple parse scenarios can be matched at the same time and should be executed one after the other.
+As you can see in the bellow subsections, many scenarios share some conditions.</p>
+<div class="section" id="canonical-parse-scenario">
+<h4>7.3.1.1. Canonical parse scenario:<a class="headerlink" href="#canonical-parse-scenario" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>[condition 1] a section named “OPTIONS” is found;</li>
+<li>[condition 2] no section named “COMMANDS” is found;</li>
+<li>[condition 3] the “OPTIONS” section matches the structure of option synopses list.</li>
+</ul>
+</div>
+<div class="section" id="embedded-sub-command-parse-scenario">
+<h4>7.3.1.2. Embedded sub-command parse scenario:<a class="headerlink" href="#embedded-sub-command-parse-scenario" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>[condition 1] a section named “OPTIONS” is found;</li>
+<li>[condition 2] a section named “COMMANDS” is found;</li>
+<li>[condition 3] the “OPTIONS” section matches the structure of option synopses list;</li>
+<li>[condition 4] the “COMMANDS” section matches the structure of command synopses;</li>
+<li>[condition 5] command synopses reference a COMMAND parameter.</li>
+</ul>
+</div>
+<div class="section" id="external-sub-command-parse-scenario">
+<h4>7.3.1.3. External sub-command parse scenario:<a class="headerlink" href="#external-sub-command-parse-scenario" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>[condition 1] a section named “OPTIONS” is found;</li>
+<li>[condition 2] a section named “COMMANDS” is found;</li>
+<li>[condition 3] the “OPTIONS” section matches the structure of option synopses list;</li>
+<li>[condition 4] the “COMMANDS” section contains a list of one-word entries with description, and each description contains a reference to an external manpage;</li>
+<li>[condition 5] command synopses reference a COMMAND parameter.</li>
+</ul>
+</div>
+<div class="section" id="multiple-options-sections-parse-scenario">
+<h4>7.3.1.4. Multiple OPTIONS sections parse scenario:<a class="headerlink" href="#multiple-options-sections-parse-scenario" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>[condition 1] multiple section containing “OPTIONS” are found;</li>
+<li>[condition 2] each of those “OPTIONS” sections matches the structure of option synopses list.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="synopsis-docbook-extraction">
+<h3>7.3.2. Synopsis docbook extraction<a class="headerlink" href="#synopsis-docbook-extraction" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="option-docbook-extraction">
+<h3>7.3.3. Option docbook extraction<a class="headerlink" href="#option-docbook-extraction" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="sub-commands-docbook-extraction">
+<h3>7.3.4. Sub-commands docbook extraction<a class="headerlink" href="#sub-commands-docbook-extraction" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="model-extraction-failures">
+<h3>7.3.5. Model Extraction Failures<a class="headerlink" href="#model-extraction-failures" title="Permalink to this headline">¶</a></h3>
+<p><strong class="command">doclifter</strong><a class="footnote-reference" href="#doclifter-official" id="id2">[1]</a> author reports 93% success on a bare Ubuntu install:</p>
+<div class="quote docutils container">
+It lifts over <strong>93%</strong> of these pages without requiring any hand-hacking.</div>
+<p>He maintains a list of non-complying tools on a bare Ubuntu installation<a class="footnote-reference" href="#doclifter-patches" id="id3">[2]</a>, in which are described 10 errors regarding SYNOPSIS interpolation:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>C   Broken command synopsis syntax. This may mean you&#39;re using a
+    construction in the command synopsis other than the standard
+    [ ] | { }, or it may mean you have running text in the command synopsis
+    section (the latter is not technically an error, but most cases of it
+    are impossible to translate into DocBook markup), or it may mean the
+    command syntax fails to match the description.
+D   Non-break space prevents doclifter from incorrectly interpreting
+    &quot;Feature Test&quot; as end of function synopsis.
+H   Renaming SYNOPSIS because either (a) third-party viewers and
+    translators will try to interpret it as a command synopsis and become
+    confused, or (b) it actually needs to be named &quot;SYNOPSIS&quot; with no
+    modifier for function protoypes to be properly recognized.
+M   Synopsis section name changed to avoid triggering command-synopsis
+    parsing.
+U   Unbalanced group in command synopsis. You probably forgot
+    to open or close a [ ] or { } group properly.
+Z   Your Synopsis is exceptionally creative.  Unfortunately, that means
+    it cannot be translated to structural markup even when things like
+    running-text inclusions have been moved elswhere.
+i   Non-ASCII character in document synopsis can&#39;t be parsed.
+j   Parenthesized comments in command synopsis.  This is impossible
+    to translate to DocBook.
+p   Synopsis was incomplete and somewhat garbled.
+t   Synopsis has to be immediately after NAME section for DocBook
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="footnotes docutils container">
+<table class="docutils footnote" frame="void" id="doclifter-official" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> See <a class="reference external" href="https://gitlab.com/esr/doclifter">doclifter</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="doclifter-patches" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[2]</a></td><td>See <a class="reference external" href="https://gitlab.com/esr/doclifter/raw/master/PATCHES">PATCHES file from doclifter project</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="character-encoding.html" class="btn btn-neutral float-right" title="8. Character encoding" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="model/user.html" class="btn btn-neutral" title="6. User model" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jules Randolph.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.0.2-draft.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

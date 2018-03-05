@@ -68,16 +68,16 @@ table, .literal-block-wrapper.docutils.container {
 }
 
 .xref.std.std-term {
-  color: #E74C3C;
-  font-style: italic;
+  color: #154663;
+  border-bottom: #15466366 dashed 1px;
 }
 
 .xref.std.std-term:visited {
-  color: #E74C3C;
+  color: #154663;
 }
 
 .xref.std.std-term:hover {
-  color: #d87211;
+  color: #38B3FF;
 }
 
 .rst-content .docutils.footnote {
@@ -149,6 +149,66 @@ table, .literal-block-wrapper.docutils.container {
   margin-bottom: 24px;
 }
 
+.rst-content .container.quote::before, .rst-content .epigraph::before {
+  position: absolute;
+  left: -25px;
+  top: 0;
+  content: "“";
+  font-size: 25px
+}
+
+.rst-content .container.quote, .rst-content .epigraph {
+  position: relative;
+  margin-left: 48px;
+  line-height: 24px;
+  margin-bottom: 24px;
+  margin-right: 48px;
+  font-style: italic;
+}
+
+.rst-content .container.quote .attribution, .rst-content .epigraph .attribution {
+  font-weight: bold;
+  font-style: normal;
+  text-align: right;
+  position: relative;
+}
+
+.rst-content .container.synopsis {
+  position: relative;
+  margin-left: 0;
+  line-height: 1;
+  margin-bottom: 24px;
+  font-family: monospace;
+  font-size: 16px;
+  background: #404040;
+  color: white;
+  padding: 24px;
+}
+
+.rst-content .container.synopsis.big {
+  font-size: 24px;
+  padding: 32px;
+}
+
+.rst-content .container.definition {
+  border: 5px solid #2980B9;
+  padding: 24px;
+  position: relative;
+  margin: 24px;
+}
+
+.rst-content .glossary.docutils dt {
+  border-left: 5px solid #2980B9;
+  padding-left: 24px;
+}
+
+.rst-content .glossary.docutils dd {
+  border-left: 5px solid #2980B9;
+  padding-left: 24px;
+  position: relative;
+  margin-left: 0;
+}
+
 .wy-table caption,.rst-content table.docutils caption,.rst-content table.field-list caption,.rst-content .figure .caption  {
     color: #000;
     font: italic 100%/1 arial,sans-serif;
@@ -159,6 +219,14 @@ table, .literal-block-wrapper.docutils.container {
 /* Fix webkit bug */
 div[class^='highlight-'] {
   overflow-y: hidden;
+}
+
+.rst-content .docutils.literal {
+  all: unset;
+  font-family: monospace;
+  font-size: 85%;
+  color: darkslategray;
+  white-space: nowrap;
 }
 
 .glossary.docutils p {
@@ -191,4 +259,13 @@ body {
   background: white;
   border-radius: 50%;
   padding: 0;
+}
+
+.rst-content .program, .rst-content .command {
+  font-family: monospace;
+}
+
+.rst-content .highlight-bash .highlight pre, .rst-content .highlight-console .highlight pre {
+  background: #404040 !important;
+  color: white !important;
 }

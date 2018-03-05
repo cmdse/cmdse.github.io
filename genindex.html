@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; cmdse 0.0.1-draft.5 documentation</title>
+  <title>Index &mdash; cmdse 0.0.2-draft.1 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="cmdse 0.0.1-draft.5 documentation" href="index.html"/> 
+    <link rel="top" title="cmdse 0.0.2-draft.1 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.0.1-draft.5
+                0.0.2-draft.1
               </div>
             
           
@@ -90,13 +90,13 @@
             
                 <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pages/cli.html">1. Command Line Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/command-snippet.html">2. Command snippet model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/call-expression-parsing.html">3. Call expressions parsing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/pim.html">4. Program Interface Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/cmdse-cli.html">1. Cmdse CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/uim.html">2. Utility Interface Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/command-snippet.html">3. Command snippet model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/call-expression-parsing.html">4. Call expressions parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/model/query.html">5. Search query model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/model/user.html">6. User model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/manparse.html">7. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/manparse-cli.html">7. Manparse CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/character-encoding.html">8. Character encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/design-faq.html">9. Design FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/glossary.html">10. Glossary</a></li>
@@ -172,37 +172,37 @@
     -c, --copy-first
 
       <ul>
-        <li><a href="pages/cli.html#cmdoption-cmdse-c">cmdse command line option</a>
+        <li><a href="pages/cmdse-cli.html#cmdoption-cmdse-c">cmdse command line option</a>
+</li>
+      </ul></li>
+      <li>
+    -e, --execute-first
+
+      <ul>
+        <li><a href="pages/cmdse-cli.html#cmdoption-cmdse-e">cmdse command line option</a>
 </li>
       </ul></li>
       <li>
     -i, --interactive
 
       <ul>
-        <li><a href="pages/cli.html#cmdoption-cmdse-i">cmdse command line option</a>
+        <li><a href="pages/cmdse-cli.html#cmdoption-cmdse-i">cmdse command line option</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    -q, --quiet
+
+      <ul>
+        <li><a href="pages/manparse-cli.html#cmdoption-manparse-q">manparse command line option</a>
 </li>
       </ul></li>
       <li>
     -v, --verbose
 
       <ul>
-        <li><a href="pages/manparse.html#cmdoption-manparse-v">manparse command line option</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li>
-    -x, --execute-first
-
-      <ul>
-        <li><a href="pages/cli.html#cmdoption-cmdse-x">cmdse command line option</a>
-</li>
-      </ul></li>
-      <li>
-    -x, --silent
-
-      <ul>
-        <li><a href="pages/manparse.html#cmdoption-manparse-x">manparse command line option</a>
+        <li><a href="pages/manparse-cli.html#cmdoption-manparse-v">manparse command line option</a>
 </li>
       </ul></li>
   </ul></td>
@@ -233,11 +233,11 @@
     cmdse command line option
 
       <ul>
-        <li><a href="pages/cli.html#cmdoption-cmdse-c">-c, --copy-first</a>
+        <li><a href="pages/cmdse-cli.html#cmdoption-cmdse-c">-c, --copy-first</a>
 </li>
-        <li><a href="pages/cli.html#cmdoption-cmdse-i">-i, --interactive</a>
+        <li><a href="pages/cmdse-cli.html#cmdoption-cmdse-e">-e, --execute-first</a>
 </li>
-        <li><a href="pages/cli.html#cmdoption-cmdse-x">-x, --execute-first</a>
+        <li><a href="pages/cmdse-cli.html#cmdoption-cmdse-i">-i, --interactive</a>
 </li>
       </ul></li>
   </ul></td>
@@ -313,9 +313,9 @@
     manparse command line option
 
       <ul>
-        <li><a href="pages/manparse.html#cmdoption-manparse-v">-v, --verbose</a>
+        <li><a href="pages/manparse-cli.html#cmdoption-manparse-q">-q, --quiet</a>
 </li>
-        <li><a href="pages/manparse.html#cmdoption-manparse-x">-x, --silent</a>
+        <li><a href="pages/manparse-cli.html#cmdoption-manparse-v">-v, --verbose</a>
 </li>
       </ul></li>
   </ul></td>
@@ -344,14 +344,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pages/glossary.html#index-0">PATH</a>, <a href="pages/model/command-snippet.html#index-3">[1]</a>
 </li>
-      <li><a href="pages/glossary.html#term-program-executable"><strong>program executable</strong></a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pages/glossary.html#term-program-identifier"><strong>program identifier</strong></a>
-</li>
-      <li><a href="pages/glossary.html#term-program-interface-model"><strong>program interface model</strong></a>
-</li>
       <li><a href="pages/model/query.html#term-program-query-selector"><strong>program query selector</strong></a>
 </li>
   </ul></td>
@@ -391,9 +385,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pages/glossary.html#term-string"><strong>string</strong></a>
 </li>
+      <li><a href="pages/glossary.html#term-string-literal"><strong>string literal</strong></a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pages/glossary.html#term-string-literal"><strong>string literal</strong></a>
+      <li><a href="pages/glossary.html#term-sub-command"><strong>sub-command</strong></a>
 </li>
       <li><a href="pages/glossary.html#term-synopsis"><strong>synopsis</strong></a>
 </li>
@@ -405,9 +401,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="pages/glossary.html#term-ucs-2"><strong>ucs-2</strong></a>
 </li>
+      <li><a href="pages/glossary.html#term-utf-8"><strong>utf-8</strong></a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="pages/glossary.html#term-utf-8"><strong>utf-8</strong></a>
+      <li><a href="pages/glossary.html#term-utility-executable"><strong>utility executable</strong></a>
+</li>
+      <li><a href="pages/glossary.html#term-utility-interface-model"><strong>utility interface model</strong></a>
+</li>
+      <li><a href="pages/glossary.html#term-utility-name"><strong>utility name</strong></a>
 </li>
   </ul></td>
 </tr></table>
@@ -461,7 +463,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1-draft.5',
+            VERSION:'0.0.2-draft.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

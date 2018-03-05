@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Specifications for cmdse: the search engine of bash commands &mdash; cmdse 0.0.1-draft.5 documentation</title>
+  <title>Specifications for cmdse: the search engine of bash commands &mdash; cmdse 0.0.2-draft.1 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="cmdse 0.0.1-draft.5 documentation" href="#"/>
-        <link rel="next" title="1. Command Line Interface" href="pages/cli.html"/> 
+    <link rel="top" title="cmdse 0.0.2-draft.1 documentation" href="#"/>
+        <link rel="next" title="1. Cmdse CLI" href="pages/cmdse-cli.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -67,7 +67,7 @@
             
             
               <div class="version">
-                0.0.1-draft.5
+                0.0.2-draft.1
               </div>
             
           
@@ -90,13 +90,13 @@
             
                 <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pages/cli.html">1. Command Line Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/command-snippet.html">2. Command snippet model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/call-expression-parsing.html">3. Call expressions parsing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/pim.html">4. Program Interface Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/cmdse-cli.html">1. Cmdse CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/uim.html">2. Utility Interface Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/command-snippet.html">3. Command snippet model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/call-expression-parsing.html">4. Call expressions parsing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/model/query.html">5. Search query model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/model/user.html">6. User model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pages/manparse.html">7. Manparse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/manparse-cli.html">7. Manparse CLI</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/character-encoding.html">8. Character encoding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/design-faq.html">9. Design FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pages/glossary.html">10. Glossary</a></li>
@@ -159,15 +159,15 @@
 </div>
 <div class="section" id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>The motivations behind the creation of <code class="docutils literal"><span class="pre">cmdse</span></code> originates from a very simple reasoning.</p>
+<p>The motivations behind the creation of <em>cmdse</em> originates from a very simple reasoning.</p>
 <ul class="simple">
 <li>How many times I have relied on Google to look for the syntax of a specific command; what if I could search by command directly from the shell ?</li>
 <li>How often I had a precise idea of <em>what</em> I wanted to do, but no idea which shell snippet would drive me there ?</li>
 <li>What if I could finally learn those commands and their semantics, instead of running off memorising those ?</li>
 </ul>
-<p>The <code class="docutils literal"><span class="pre">cmdse</span></code> program should meet the following requirements:</p>
+<p>The <em>cmdse</em> program should meet the following requirements:</p>
 <ul class="simple">
-<li>Provide a user-friendly command line tool to query linux-shell command snippets.</li>
+<li>Provide a user-friendly <strong class="program">cmdse</strong> command line tool to query linux-shell command snippets.</li>
 <li>Enable the user to query <em>what</em> he wants to do, and the search engine grabs the best-matched snippets.</li>
 <li>Enable features to memorize the semantics of commonly used commands with mini-quizz.</li>
 <li>Model rich meta-data on program arguments and options, allowing the user to learn the semantics of the programs and snippets he uses.</li>
@@ -177,61 +177,57 @@
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Table of Contents</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pages/cli.html">1. Command Line Interface</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/cli.html#usage">1.1. Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/cli.html#synopsis">1.1.1. Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/cli.html#query-operands">1.1.2. QUERY operands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/cli.html#options">1.1.3. OPTIONS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/cli.html#examples">1.1.4. Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/cmdse-cli.html">1. Cmdse CLI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/cmdse-cli.html#synopsis">1.1. Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/cmdse-cli.html#options">1.2. Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/cmdse-cli.html#examples">1.3. Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/cmdse-cli.html#target-platform-requirements">1.4. Target platform requirements</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pages/cli.html#target-platform-requirements">1.2. Target platform requirements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/uim.html">2. Utility Interface Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/uim.html#synopses">2.1. Synopses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/uim.html#posix-1-2008-strict-rules">2.1.1. POSIX.1-2008 Strict Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/uim.html#posix-1-2008-guidance-rules">2.1.2. POSIX.1-2008 Guidance Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/uim.html#accepted-non-posix-rules">2.1.3. Accepted non-POSIX rules</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/command-snippet.html">2. Command snippet model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#general-requirements">2.1. General Requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#command-snippet-requirements">2.2. Command snippet requirements</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#shell-processing-workflow">2.3. Shell processing workflow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#call-expression-structure">2.4. Call expression structure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#static-call-expressions">2.4.1. Static call expressions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#command-identifier">2.4.2. Command identifier</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#arguments">2.4.3. Arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/uim.html#option-description-model">2.2. Option Description Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/uim.html#option-expressions-variants">2.2.1. Option expressions Variants</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#option-expressions-syntax">2.5. Option expressions syntax</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#styles">2.5.1. Styles</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#option-schemes">2.5.2. Option schemes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/uim.html#option-scheme">2.3. Option scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/uim.html#sub-commands">2.4. Sub-commands</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#analytic-model">2.6. Analytic model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#forks">2.7. Forks</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#sub-command-snippet">2.7.1. Sub-command snippet</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#commmand-snippet-variant">2.7.2. Commmand snippet variant</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#alias">2.7.3. Alias</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/command-snippet.html">3. Command snippet model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#general-requirements">3.1. General Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#command-snippet-requirements">3.2. Command snippet requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#shell-processing-workflow">3.3. Shell processing workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#call-expression-structure">3.4. Call expression structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#static-call-expressions">3.4.1. Static call expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#command-identifier">3.4.2. Command identifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#arguments">3.4.3. Arguments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#analytic-model">3.5. Analytic model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/command-snippet.html#forks">3.6. Forks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#sub-command-snippet">3.6.1. Sub-command snippet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#commmand-snippet-variant">3.6.2. Commmand snippet variant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/command-snippet.html#alias">3.6.3. Alias</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/call-expression-parsing.html">3. Call expressions parsing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#parsing-workflow">3.1. Parsing workflow</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#tokenization">3.2. Tokenization</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/call-expression-parsing.html#context-free-tokens-typings">3.2.1. Context-free tokens typings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/call-expression-parsing.html#semantic-tokens-typings">3.2.2. Semantic tokens typings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/model/call-expression-parsing.html">4. Call expressions parsing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#parsing-workflow">4.1. Parsing workflow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#tokenization">4.2. Tokenization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/call-expression-parsing.html#context-free-tokens-typings">4.2.1. Context-free tokens typings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/model/call-expression-parsing.html#semantic-tokens-typings">4.2.2. Semantic tokens typings</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#analytic-model">3.3. Analytic Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#option-parsing-algorithm">3.4. Option parsing algorithm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#edge-cases-and-extension-perspectives">3.5. Edge cases and extension perspectives</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="pages/model/pim.html">4. Program Interface Model</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/pim.html#synopses">4.1. Synopses</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/pim.html#posix-1-2008-strict-rules">4.1.1. POSIX.1-2008 Strict Rules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/model/pim.html#posix-1-2008-guidance-rules">4.1.2. POSIX.1-2008 Guidance Rules</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/pim.html#option-description-model">4.2. Option Description Model</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pages/model/pim.html#sub-commands">4.3. Sub-commands</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#analytic-model">4.3. Analytic Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#option-parsing-algorithm">4.4. Option parsing algorithm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/model/call-expression-parsing.html#edge-cases-and-extension-perspectives">4.5. Edge cases and extension perspectives</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pages/model/query.html">5. Search query model</a><ul>
@@ -246,17 +242,15 @@
 <li class="toctree-l2"><a class="reference internal" href="pages/model/user.html#reputation">6.2. Reputation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pages/manparse.html">7. Manparse</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pages/manparse.html#cli-overview">7.1. CLI overview</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#synopsis">7.1.1. Synopsis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#options">7.1.2. Options</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pages/manparse.html#implementation-details">7.2. Implementation details</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#parse-scenario">7.2.1. Parse scenario</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#synopsis-docbook-extraction">7.2.2. Synopsis docbook extraction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#option-docbook-extraction">7.2.3. Option docbook extraction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="pages/manparse.html#sub-commands-docbook-extraction">7.2.4. Sub-commands docbook extraction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pages/manparse-cli.html">7. Manparse CLI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pages/manparse-cli.html#synopsis">7.1. Synopsis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/manparse-cli.html#options">7.2. Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pages/manparse-cli.html#implementation-details">7.3. Implementation details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse-cli.html#parse-scenario">7.3.1. Parse scenario</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse-cli.html#synopsis-docbook-extraction">7.3.2. Synopsis docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse-cli.html#option-docbook-extraction">7.3.3. Option docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse-cli.html#sub-commands-docbook-extraction">7.3.4. Sub-commands docbook extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pages/manparse-cli.html#model-extraction-failures">7.3.5. Model Extraction Failures</a></li>
 </ul>
 </li>
 </ul>
@@ -297,7 +291,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="pages/cli.html" class="btn btn-neutral float-right" title="1. Command Line Interface" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="pages/cmdse-cli.html" class="btn btn-neutral float-right" title="1. Cmdse CLI" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -329,7 +323,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1-draft.5',
+            VERSION:'0.0.2-draft.1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

@@ -1,0 +1,594 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. Utility Interface Model &mdash; cmdse 0.0.2-draft.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/theme_overrides.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../genindex.html"/>
+        <link rel="search" title="Search" href="../../search.html"/>
+    <link rel="top" title="cmdse 0.0.2-draft.1 documentation" href="../../index.html"/>
+        <link rel="next" title="3. Command snippet model" href="command-snippet.html"/>
+        <link rel="prev" title="1. Cmdse CLI" href="../cmdse-cli.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> cmdse
+          
+
+          
+            
+            <img src="../../_static/cmdse.svg" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.2-draft.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../cmdse-cli.html">1. Cmdse CLI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. Utility Interface Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#synopses">2.1. Synopses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#posix-1-2008-strict-rules">2.1.1. POSIX.1-2008 Strict Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#posix-1-2008-guidance-rules">2.1.2. POSIX.1-2008 Guidance Rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#accepted-non-posix-rules">2.1.3. Accepted non-POSIX rules</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#option-description-model">2.2. Option Description Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#option-expressions-variants">2.2.1. Option expressions Variants</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#option-scheme">2.3. Option scheme</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sub-commands">2.4. Sub-commands</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="command-snippet.html">3. Command snippet model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="call-expression-parsing.html">4. Call expressions parsing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="query.html">5. Search query model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user.html">6. User model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../manparse-cli.html">7. Manparse CLI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../character-encoding.html">8. Character encoding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../design-faq.html">9. Design FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">10. Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/bash-grammar.html">11. Bash V2 grammar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../appendix/grammar-commons.html">12. Shared definitions for ABNF grammars</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">cmdse</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+    <li>2. Utility Interface Model</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/pages/model/uim.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="utility-interface-model">
+<h1>2. Utility Interface Model<a class="headerlink" href="#utility-interface-model" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A <a class="reference internal" href="../glossary.html#term-utility-interface-model"><span class="xref std std-term">utility interface model</span></a> (UIM) is a central aspect of <em>cmdse</em> model since it enables all rich-semantic features. <strong class="command">manparse</strong> is a tool developed along with <em>cmdse</em> to extract such UIM from manpages, see <a class="reference internal" href="../manparse-cli.html#manparse-cli-section"><span class="std std-numref">Section 7</span></a>.</p>
+</div>
+<p>It is defined as follow:</p>
+<div class="definition docutils container">
+<p>Structured data describing the command line interface capabilities of a <a class="reference internal" href="../glossary.html#term-utility-executable"><span class="xref std std-term">utility executable</span></a> identified by its <a class="reference internal" href="../glossary.html#term-utility-name"><span class="xref std std-term">utility name</span></a>. The capabilities are defined through:</p>
+<ul class="simple">
+<li>a set of <a class="reference internal" href="../glossary.html#term-synopsis"><span class="xref std std-term">synopses</span></a> of minimum length one, see <a class="reference internal" href="#synopses-section"><span class="std std-numref">Section 2.1</span></a> ;</li>
+<li>an <a class="reference internal" href="../glossary.html#term-option-description-model"><span class="xref std std-term">option description model</span></a> which is a set of options and their related expressions, see <a class="reference internal" href="#option-description-model-section"><span class="std std-numref">Section 2.2</span></a>;</li>
+<li>an <a class="reference internal" href="../glossary.html#term-option-scheme"><span class="xref std std-term">option scheme</span></a>, see <a class="reference internal" href="#option-schemes-section"><span class="std std-numref">Section 2.3</span></a>;</li>
+<li>an optional set of <a class="reference internal" href="../glossary.html#term-sub-command"><span class="xref std std-term">sub-commands</span></a>, see <a class="reference internal" href="#subcommands-section"><span class="std std-numref">Section 2.4</span></a>.</li>
+</ul>
+<p>Those are defined for a peculiar <a class="reference internal" href="../glossary.html#term-version-range"><span class="xref std std-term">version range</span></a>.
+The term “utility” is directly borrowed from the POSIX.1-2008 reference<a class="footnote-reference" href="#posix-synopsis" id="id1">[1]</a>.</p>
+</div>
+<div class="section" id="synopses">
+<span id="synopses-section"></span><h2>2.1. Synopses<a class="headerlink" href="#synopses" title="Permalink to this headline">¶</a></h2>
+<p>POSIX.1-2008 reference<a class="footnote-reference" href="#posix-synopsis" id="id2">[1]</a> defines strictly the syntax of a utility (or command) synopsis:</p>
+<div class="synopsis docutils container">
+<strong>utility_name[</strong>-a<strong>][</strong>-b<strong>][</strong>-c option_argument<strong>][</strong>-d<strong>|</strong>-e<strong>][</strong>-f<strong>[</strong>option_argument<strong>]][</strong>operand<strong>…]</strong></div>
+<p>This standard syntax definition is globally well defined. <strong class="command">doclifter</strong><a class="footnote-reference" href="#doclifter-project" id="id3">[3]</a> author reports a 93% success rate for its manapge to DocBook extractor on a bare Ubuntu install.</p>
+<div class="section" id="posix-1-2008-strict-rules">
+<h3>2.1.1. POSIX.1-2008 Strict Rules<a class="headerlink" href="#posix-1-2008-strict-rules" title="Permalink to this headline">¶</a></h3>
+<p><strong>The following syntax rules are non-exhaustive but give a quick overview of the standard:</strong></p>
+<ul>
+<li><p class="first">Options are denoted with hyphen <code class="docutils literal"><span class="pre">-</span></code> prefixes and separated by blank characters.</p>
+</li>
+<li><p class="first">Optional words are enclosed between square braquets <code class="docutils literal"><span class="pre">[]</span></code>.</p>
+</li>
+<li><p class="first">Exclusive expressions are denoted with the pipe <code class="docutils literal"><span class="pre">|</span></code> character.</p>
+</li>
+<li><p class="first">Alternatively, mutually-exclusive options and operands may be listed with multiple synopsis lines. For example:</p>
+<div class="synopsis docutils container">
+<div class="line-block">
+<div class="line"><strong>utility_name -d[</strong>-a<strong>][</strong>-c option_argument<strong>][</strong>operand<strong>…]</strong></div>
+<div class="line"><strong>utility_name[</strong>-a<strong>][</strong>-b<strong>][</strong>operand<strong>…]</strong></div>
+</div>
+</div>
+</li>
+<li><p class="first">Repeatable expressions are followed up by ellipsis <code class="docutils literal"><span class="pre">…</span></code> or three dots character.</p>
+</li>
+<li><p class="first">Names that require substitution could be enclosed in angle-braquets <code class="docutils literal"><span class="pre">&lt;&gt;</span></code> or embedded with underscore <code class="docutils literal"><span class="pre">_</span></code> characters (non-mandatory).</p>
+</li>
+<li><p class="first">Utilities with many flags generally show all of the individual flags (that do not take option-arguments) grouped, as in:</p>
+<div class="synopsis docutils container">
+<p><strong>utility_name</strong> <strong>[</strong>-abcDxyz<strong>][</strong>-p arg<strong>][</strong>operand<strong>]</strong></p>
+</div>
+</li>
+<li><p class="first">Utilities with very complex arguments may be shown as follows:</p>
+<div class="synopsis docutils container">
+<p><strong>utility_name [</strong>options<strong>][</strong>operands<strong>]</strong></p>
+</div>
+</li>
+<li><p class="first">Unless otherwise specified, whenever an operand or option-argument is, or contains, a numeric value, the number is interpreted as a decimal integer.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="posix-1-2008-guidance-rules">
+<h3>2.1.2. POSIX.1-2008 Guidance Rules<a class="headerlink" href="#posix-1-2008-guidance-rules" title="Permalink to this headline">¶</a></h3>
+<p>POSIX.1-2008 reference<a class="footnote-reference" href="#posix-synopsis" id="id4">[1]</a> defines guidance rules which shall be implemented.</p>
+<p><strong>Guidelines are provided as non-mandatory, but many are implemented in Unix system utilities. This list is non-exhaustive, but reatains rules which might affect the cmdse project:</strong></p>
+<ul class="simple">
+<li><strong>G1, 2</strong> Utility names should be between two and nine characters, inclusive, and should include lowercase letters (the lower character classification) and digits only from the portable character set.</li>
+<li><strong>G3</strong> Each option name should be a single alphanumeric character (the <strong>alnum</strong> character classification) from the portable character set. Multi-digit options should not be allowed.</li>
+<li><strong>G4</strong> All options should be preceded by the ‘-‘ delimiter character.</li>
+<li><strong>G5</strong> One or more options without option-arguments, followed by at most one option that takes an option-argument, should be accepted when grouped behind one <code class="docutils literal"><span class="pre">-</span></code> delimiter.</li>
+<li><strong>G6</strong> Each option and option-argument should be a separate argument, except as noted in Utility Argument Syntax, item (2).</li>
+<li><strong>G8</strong> When multiple option-arguments are specified to follow a single option, they should be presented as a single argument, using comma <code class="docutils literal"><span class="pre">,</span></code> characters within that argument or blank characters within that argument to separate them.</li>
+<li><strong>G9</strong> All options should precede operands on the command line.</li>
+<li><strong>G10</strong> The first <code class="docutils literal"><span class="pre">--</span></code> argument that is not an option-argument should be accepted as a delimiter indicating the end of options. Any following arguments should be treated as operands, even if they begin with the <code class="docutils literal"><span class="pre">-</span></code> character.</li>
+<li><strong>G11</strong> The order of different options relative to one another should not matter, unless the options are documented as mutually-exclusive.</li>
+<li><strong>G12</strong> The order of operands may matter and position-related interpretations should be determined on a utility-specific basis.</li>
+<li><strong>G13</strong> For utilities that use operands to represent files to be opened for either reading or writing, the <code class="docutils literal"><span class="pre">-</span></code> operand should be used to mean only standard input (or standard output when it is clear from context that an output file is being specified) or a file named ‘-‘.</li>
+</ul>
+</div>
+<div class="section" id="accepted-non-posix-rules">
+<h3>2.1.3. Accepted non-POSIX rules<a class="headerlink" href="#accepted-non-posix-rules" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>POSIX guideline <strong>G3</strong> must be extended with GNU-style and X-Toolkit style options.</li>
+</ul>
+<p><em>to be continued</em></p>
+</div>
+</div>
+<div class="section" id="option-description-model">
+<span id="option-description-model-section"></span><h2>2.2. Option Description Model<a class="headerlink" href="#option-description-model" title="Permalink to this headline">¶</a></h2>
+<p>An option description model is a set of <a class="reference internal" href="../glossary.html#term-option-description"><span class="xref std std-term">option descriptions</span></a>. The latter is defined as follow:</p>
+<div class="definition docutils container">
+Structured data composed of a description text field and a collection of match models.
+Each match model is related to an <a class="reference internal" href="../glossary.html#term-option-expression-variant"><span class="xref std std-term">option expression variant</span></a> and has a one-or-two groups regular expression.
+When two groups can be matched, the latest is the option parameter of an explicit option assignments.</div>
+<p>It is traditionnaly found on linux manual pages in the “OPTIONS” section. Bellow an invented example:</p>
+<div class="highlight-console"><div class="highlight"><pre><span></span><span class="go">OPTIONS</span>
+<span class="go">    -h, --help</span>
+<span class="go">        Display help.</span>
+
+<span class="go">    -a, --all</span>
+<span class="go">        Select all items.</span>
+
+<span class="go">     ...</span>
+</pre></div>
+</div>
+<div class="section" id="option-expressions-variants">
+<span id="option-expression-syntax"></span><h3>2.2.1. Option expressions Variants<a class="headerlink" href="#option-expressions-variants" title="Permalink to this headline">¶</a></h3>
+<p>Three option styles exists in the unix world.</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html">POSIX Style</a></li>
+<li><a class="reference external" href="https://www.gnu.org/prep/standards/html_node/Command_002dLine-Interfaces.html">GNU Style</a></li>
+<li><a class="reference external" href="http://www.catb.org/esr/writings/taoup/html/ch10s05.html">X Toolkit Style</a></li>
+</ol>
+<p>In the <a class="reference internal" href="#option-expression-variants"><span class="std std-numref">Table 2.1</span></a>, different option expression variants are listed and their corresponding style.</p>
+<span id="option-expression-variants"></span><table border="1" class="colwidths-given docutils" id="id8">
+<caption><span class="caption-number">Table 2.1 </span><span class="caption-text">Option expression variants</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="1%" />
+<col width="23%" />
+<col width="47%" />
+<col width="17%" />
+<col width="12%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><div class="first last line-block">
+<div class="line">Expression variant</div>
+<div class="line">assign. value in “&lt;&gt;”</div>
+</div>
+</th>
+<th class="head">Variant</th>
+<th class="head">Description</th>
+<th class="head">Style</th>
+<th class="head">Prevalence</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">-o</span></code></td>
+<td><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></td>
+<td>One-letter option switch</td>
+<td>POSIX</td>
+<td>Very common</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">-opq</span></code></td>
+<td><code class="docutils literal"><span class="pre">POSIX_GROUPED_SHORT_FLAGS</span></code></td>
+<td>One-letter option stack switch. This is equivalent to <code class="docutils literal"><span class="pre">-o</span> <span class="pre">-p</span> <span class="pre">-q</span></code>.</td>
+<td>POSIX</td>
+<td>Common</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">-o</span> <span class="pre">&lt;value&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT</span></code></td>
+<td>One-letter option switch with value assignment</td>
+<td>POSIX</td>
+<td>Very common</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">-o&lt;value&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">POSIX_SHORT_STICKY_VALUE</span></code></td>
+<td>One-letter option switch with integer sticky value</td>
+<td>POSIX</td>
+<td>Common</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">-option</span></code></td>
+<td><code class="docutils literal"><span class="pre">X2LKT_SWITCH</span></code></td>
+<td>Long option switch</td>
+<td>X Toolkit</td>
+<td>Less common</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">+option</span></code></td>
+<td><code class="docutils literal"><span class="pre">X2LKT_REVERSE_SWITCH</span></code></td>
+<td>Long option switch reset (<a class="linuxman-url reference external" href="http://linux.die.net/man/1/xterm"><em>xterm(1)</em></a>)</td>
+<td>X Toolkit</td>
+<td>Rare</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">-option</span> <span class="pre">&lt;value&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNMENT</span></code></td>
+<td>Long option switch with implicit value assignment</td>
+<td>X Toolkit</td>
+<td>Less common</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">-option=&lt;value&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">X2LKT_EXPLICIT_ASSIGNMENT</span></code></td>
+<td>Long option switch with explicit value assignment</td>
+<td>X Toolkit</td>
+<td>Less common</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--option</span></code></td>
+<td><code class="docutils literal"><span class="pre">GNU_SWITCH</span></code></td>
+<td>Long option switch</td>
+<td>GNU</td>
+<td>Very common</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--option</span> <span class="pre">&lt;value&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">GNU_IMPLICIT_ASSIGNMENT</span></code></td>
+<td>Long option switch with implicit value assignement</td>
+<td>GNU</td>
+<td>Very common</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">--option=&lt;value&gt;</span></code></td>
+<td><code class="docutils literal"><span class="pre">GNU_EXPLICIT_ASSIGNMENT</span></code></td>
+<td>Long option switch with explicit value assignment</td>
+<td>GNU</td>
+<td>Very common</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">--</span></code></td>
+<td><code class="docutils literal"><span class="pre">POSIX_END_OF_OPTIONS</span></code></td>
+<td>Signal end of options, i.e. upcoming arguments must be treated as <a class="reference internal" href="../glossary.html#term-operand"><span class="xref std std-term">operands</span></a><a class="footnote-reference" href="#end-of-options" id="id5">[2]</a></td>
+<td>GNU</td>
+<td>Common</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">option</span></code></td>
+<td><code class="docutils literal"><span class="pre">HEADLESS_OPTION</span></code></td>
+<td>An “old style” option, see <a class="linuxman-url reference external" href="http://linux.die.net/man/1/tar"><em>tar(1)</em></a><a class="footnote-reference" href="#tar" id="id6">[4]</a> for an example.</td>
+<td>NONE</td>
+<td>Very rare</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="option-scheme">
+<span id="option-schemes-section"></span><h2>2.3. Option scheme<a class="headerlink" href="#option-scheme" title="Permalink to this headline">¶</a></h2>
+<p>An <a class="reference internal" href="../glossary.html#term-option-scheme"><span class="xref std std-term">option scheme</span></a> is a set of <a class="reference internal" href="../glossary.html#term-option-expression-variant"><span class="xref std std-term">option expression variants</span></a> which delimits the option expressions supported by a <a class="reference internal" href="../glossary.html#term-command-identifier"><span class="xref std std-term">command identifier</span></a>. A list of presets provided by <em>cmdse</em> is shown in <a class="reference internal" href="#option-schemes"><span class="std std-numref">Table 2.2</span></a>.</p>
+<span id="option-schemes"></span><table border="1" class="colwidths-given docutils" id="id9">
+<caption><span class="caption-number">Table 2.2 </span><span class="caption-text">List of option scheme presets</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="25%" />
+<col width="40%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Preset</th>
+<th class="head">Description</th>
+<th class="head">Supported option expression variants</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>POSIX-Strict</td>
+<td>Option expressions can be can be composed solely with POSIX-styled variants.</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_GROUPED_SHORT_FLAGS</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_END_OF_OPTIONS</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>Linux-Standard</td>
+<td>Option expressions can be of any common GNU or POSIX-styled variants. Very often, one option has either one GNU and one POSIX variant, either one POSIX variant.</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_GROUPED_SHORT_FLAGS</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_IMPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_EXPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_END_OF_OPTIONS</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>Linux-Explicit</td>
+<td>Option expressions can be of any common GNU or POSIX-styled variants with implicit assignments.</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_GROUPED_SHORT_FLAGS</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_EXPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_END_OF_OPTIONS</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>Linux-Implicit</td>
+<td>Option expressions can be of any common GNU or POSIX-styled variants with explicit assignments.</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_GROUPED_SHORT_FLAGS</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">GNU_IMPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_END_OF_OPTIONS</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>X-Toolkit-Strict</td>
+<td>Option expressions can be composed solely with X-Toolkit-styled variants.</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">X2LKT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_REVERSE_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_EXPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_END_OF_OPTIONS</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>X-Toolkit-Standard</td>
+<td>Option expressions can be composed solely with X-Toolkit-styled variants and POSIX short.</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">X2LKT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_REVERSE_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_EXPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_END_OF_OPTIONS</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>X-Toolkit-Explicit</td>
+<td>Option expressions can be composed solely with X-Toolkit-styled variants and POSIX short.</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">X2LKT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_REVERSE_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_EXPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_END_OF_OPTIONS</span></code></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>X-Toolkit-Implicit</td>
+<td>Option expressions can be composed solely with X-Toolkit-styled variants and POSIX short.</td>
+<td><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">X2LKT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_REVERSE_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">X2LKT_IMPLICIT_ASSIGNMENT</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_SHORT_SWITCH</span></code></li>
+<li><code class="docutils literal"><span class="pre">POSIX_END_OF_OPTIONS</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="sub-commands">
+<span id="subcommands-section"></span><h2>2.4. Sub-commands<a class="headerlink" href="#sub-commands" title="Permalink to this headline">¶</a></h2>
+<p><em>to be writen</em></p>
+<hr class="docutils" />
+<div class="footnotes docutils container">
+<table class="docutils footnote" frame="void" id="posix-synopsis" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>, <a class="fn-backref" href="#id4">3</a>)</em> See <a class="reference external" href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html">POSIX.1-2008, sec. 12.1</a>, “Utility Conventions”</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="end-of-options" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[2]</a></td><td>See <a class="reference external" href="http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap12.html">POSIX.1-2008, sec. 12.1</a>, guideline 10 which states that “The first <code class="docutils literal"><span class="pre">--</span></code> argument that is not an option-argument should be accepted as a delimiter indicating the end of options. Any following arguments should be treated as operands, even if they begin with the <code class="docutils literal"><span class="pre">-</span></code> character.” This behavior is implemented in a great number of bash <a class="reference internal" href="../glossary.html#term-builtin-command"><span class="xref std std-term">builtin commands</span></a> and unix programs.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="doclifter-project" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>See <a class="reference external" href="https://gitlab.com/esr/doclifter">Gitlab project</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="tar" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[4]</a></td><td><a class="reference external" href="https://www.gnu.org/software/tar/manual/html_section/tar_21.html#SEC38">Tar “Old Option Style”</a></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="command-snippet.html" class="btn btn-neutral float-right" title="3. Command snippet model" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../cmdse-cli.html" class="btn btn-neutral" title="1. Cmdse CLI" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Jules Randolph.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.0.2-draft.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
